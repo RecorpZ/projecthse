@@ -2,7 +2,14 @@
 meta:
   environment: node
   toolchain:
-    name: browser
+    name: npm
     version: 20
-build: {}
-run: {}
+build:
+  skip: false
+  artifacts:
+    '*': /
+run:
+  scriptName: index.js
+  command: npm run start
+  persistenceMount: /data
+  containerPort: 80
