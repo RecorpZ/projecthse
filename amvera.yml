@@ -1,5 +1,8 @@
+---
 meta:
   environment: node
   toolchain:
     name: browser
     version: 20
+build: {}
+run: {}
