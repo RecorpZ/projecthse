@@ -6,10 +6,11 @@ import {Routes,BrowserRouter as Router, Route} from "react-router-dom"
 import Home from '../pages/Home'
 import Studmaterials from '../pages/Studmaterials'
 import Plans from '../pages/Plans'
-import Misc from '../pages/Misc'
+import {Misc} from '../pages/Misc'
 import Regist from '../pages/Regist'
 import Test from '../pages/Test'
-import Login from '../pages/Login'
+import {Login} from '../pages/Login'
+
 
 export default class header extends Component {
   render() {

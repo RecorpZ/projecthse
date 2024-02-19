@@ -11,7 +11,7 @@ app.use((req,res, next)=> {
     res.setHeader("Access-Control-Allow-Origin", "*");
     next();
 });
-app.use(express.json({limit:'10mb'}))
+app.use(express.json({limit:'100mb'}))
 
 let db = new sqlite3.Database("maindatabase.db" , (err) => {
     if (err) {
