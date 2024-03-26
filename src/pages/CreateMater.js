@@ -4,7 +4,7 @@ import { useEffect ,useState } from 'react'
 
 
 
-export const Test = ( ) => {
+export const Creatematerials = ( ) => {
     const [name, setName] = useState('');
     const [require, setrequire] = useState([]);
     const [materlist, setMaterlist] = useState([]);
@@ -36,19 +36,36 @@ export const Test = ( ) => {
         alert("Предмет с таким названием уже существует")
       }
       if(res.data === "sled")
-      {
+      { if(require.length > 0 ){
+
+        axios.post("http://localhost:3001/crusnameid",{cursname})
+      .then(res =>{
+        
+        const vara = res.data
+        const cursid = vara[0].Id
+        console.log(cursid)
         require.forEach((reqe) => {
-          axios.post("http://localhost:3001/crreq",{cursname,reqe})
+          const reqid = reqe
+          axios.post("http://localhost:3001/reqnameid",{reqid})
+      .then(res =>{
+        const varb = res.data
+        const reqid2 = varb[0].Id
+        console.log(reqid2)
+              axios.post("http://localhost:3001/crreq",{cursid,reqid2})
+      })
         });
+      })}
+      setTimeout(() => {
         window.location.reload();
+        }, 500);
       }
     })
     
-    
+    console.log(require)
   }
 
     return (
-      <div class = "mem">
+      <div class = "meme">
         <form class="form-req" onSubmit= {OnFinish}>
           <h3>Создание нового предмета</h3>
           <div className="mb-3">
@@ -88,7 +105,6 @@ export const Test = ( ) => {
               placeholder="Напишите сколько модулей идет курс"
             />
           </div>
-
           <div className="mb-3">
             <label>Длительность предмета в учебных часах</label>
             <input
@@ -107,7 +123,6 @@ export const Test = ( ) => {
             </button>
           </div>
         </form>
-        
         <form class="form-req" >
         <h3>Редактирование зависимостей</h3>
         <select  defaultValue="none" onChange={e => setName(e.target.value)} >
@@ -127,7 +142,7 @@ export const Test = ( ) => {
             name
           ]);
         }
-        }}>Add</button>
+        }}>Добавить</button>
         <ul>
         {require.map(req => (
           <li key={req.name}>{req}
@@ -143,6 +158,7 @@ export const Test = ( ) => {
         ))}
         </ul>
         </form>
+        
       </div>
 
       

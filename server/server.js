@@ -4,6 +4,7 @@ const cors = require("cors")
 const sqlite3 = require("sqlite3")
 const bcrypt = require("bcrypt")
 const axios = require("axios")
+const { json } = require("react-router-dom")
 const saltRounds = 12;
 
 app.use(cors())
@@ -11,7 +12,7 @@ app.use((req,res, next)=> {
     res.setHeader("Access-Control-Allow-Origin", "*");
     next();
 });
-app.use(express.json({limit:'100mb'}))
+app.use(express.json({limit:'10mb'}))
 
 let db = new sqlite3.Database("maindatabase.db" , (err) => {
     if (err) {
@@ -19,7 +20,7 @@ let db = new sqlite3.Database("maindatabase.db" , (err) => {
     }
     console.log("Connected to the access database")
 })
-
+console.log('%c 34 23 12 23 ', 'color: #7fcd93');
 app.post("/loginAcc", (req,res) =>{
     const {email,password} = req.body
 
@@ -33,7 +34,6 @@ app.post("/loginAcc", (req,res) =>{
             {
                 res.send("AccountConfirmed");
                 console.log("Профиль пользователя подтвержден");
-                console.log(res)
             }
             else
             {
@@ -45,9 +45,228 @@ app.post("/loginAcc", (req,res) =>{
         {
             res.send("NOAccount");
             console.log("Нет такого");
-            console.log(res)
         }
     } )
+})
+
+app.post("/materiallist", (req,res) =>{
+    db.all(`select CursName from Studm `, (err, rows)=>{
+        if(err){
+            throw err;
+        }
+        if (rows.length > 0)
+        {
+         res.send(rows)
+        }
+        else
+        {
+
+        }
+    } )
+})
+
+
+
+app.post("/addplans", (req,res) =>{  
+    const {combined,tplanname} = req.body;
+    db.all(`insert into NPlans (PlanName) VALUES ('${tplanname}'); `, (err, rows)=>{
+        if(err){
+            throw err;
+        }
+        db.all(`select Id from NPlans where PlanName = '${tplanname}'; `, (err, rows)=>{
+            if(err){
+                throw err;
+            }
+            if (rows.length > 0)
+            {
+             const PlanId = rows[0].Id
+
+             combined.forEach(par => {
+                db.all(`INSERT INTO "Plan-sm" (PlanId,MatId,Module,Hours,Cost) VALUES ('${PlanId}','${par.Id}','${par.Module}','${par.TeachHours}','${par.CreditCost}'); `, (err, rows)=>{
+                    if(err){
+                        throw err;
+                    }
+                    else{
+                        
+                    }
+    
+                })
+              });
+
+            }
+        })
+    } )
+})
+
+app.get("/matlist", (req,res) =>{
+    db.all(`select * from Studm `, (err, rows)=>{
+        if(err){
+            throw err;
+        }
+        if (rows.length > 0)
+        {
+         res.send(rows)
+        }
+
+    } )
+})
+
+app.get("/plannamelist", (req,res) =>{
+    db.all(`select * from NPlans `, (err, rows)=>{
+        if(err){
+            throw err;
+        }
+        if (rows.length > 0)
+        {
+         res.send(rows)
+        }
+
+    } )
+})
+
+app.get("/planelist", (req,res) =>{
+    db.all(`select * from "Plan-sm" `, (err, rows)=>{
+        if(err){
+            throw err;
+        }
+        if (rows.length > 0)
+        {
+         res.send(rows)
+        }
+
+    } )
+})
+
+app.post("/crusnameid", (req,res) =>{
+    const {cursname} = req.body
+    db.all(`select Id from Studm where CursName = '${cursname}' `, (err, rows)=>{
+        if(err){
+            throw err;
+        }
+        if (rows.length > 0)
+        {
+         res.send(rows)
+        }
+        else
+        {
+
+        }
+    } )
+})
+app.post("/editmat", (req,res) =>{
+    const {changeid,cursname, curscost,cursdur,curstime,require} = req.body
+    db.all(`update Studm SET Cursname ='${cursname}', CreditCost = '${curscost}', CoursDuration = '${cursdur}', TeachHours = '${curstime}' where Id = '${changeid}'`, (err, rows)=>{
+        if(err){
+            throw err;
+        }
+        else
+        {
+         res.send("good")
+
+         db.all(`delete from Matreq WHERE CursId= '${changeid}';`, (err, rows)=>{
+            if(err){
+                throw err;
+            }
+        
+            require.forEach(par => {
+                db.all(`INSERT INTO Matreq (CursId,ReqId) VALUES ('${par.CursId}','${par.ReqId}'); `, (err, rows)=>{
+                    if(err){
+                        throw err;
+                    }
+                    else{
+                        
+                    }
+    
+                })
+              });
+        
+        })
+         
+        }
+    } )
+})
+
+
+app.post("/reqnameid", (req,res) =>{
+    const {reqid} = req.body
+    db.all(`select Id from Studm where CursName = '${reqid}' `, (err, rows)=>{
+        if(err){
+            throw err;
+        }
+        if (rows.length > 0)
+        {
+         res.send(rows)
+        }
+        else
+        {
+
+        }
+    } )
+})
+
+app.get("/reqlist", (req,res) =>{
+    db.all(`select * from Matreq `, (err, rows)=>{
+        if(err){
+            throw err;
+        }
+        if (rows.length > 0)
+        {
+         res.send(rows)
+        }
+
+    } )
+})
+
+app.post("/getname", (req,res) =>{
+    const {email} = req.body
+    db.all(`select UserName from Users where UserMail = '${email}' `, (err, rows)=>{
+        if(err){
+            throw err;
+        }
+        if (rows.length > 0)
+        {
+            res.send(rows[0].UserName);
+        }
+
+    } )
+})
+
+app.post("/getnickname", (req,res) =>{
+    const {email} = req.body
+    db.all(`select UserNickname from Users where UserMail = '${email}' `, (err, rows)=>{
+        if(err){
+            throw err;
+        }
+        if (rows.length > 0)
+        {
+            res.send(rows[0].UserNickname);
+        }
+
+    } )
+})
+
+app.post("/delete", (req,res) =>{
+    const {cursName} = req.body
+    db.all(`delete from Matreq WHERE CursId= '${cursName}';`, (err, rows)=>{
+        if(err){
+            throw err;
+        }
+    })
+    db.all(`delete from Matreq WHERE ReqId= '${cursName}';`, (err, rows)=>{
+        if(err){
+            throw err;
+        }
+    })
+    db.all(`delete from Studm WHERE Id= '${cursName}';`, (err, rows)=>{
+        if(err){
+            throw err;
+        }
+    })
+    db.all(`delete from "Plan-sm" WHERE MatId= '${cursName}';`, (err, rows)=>{
+        if(err){
+            throw err;
+        }
+    })
 })
 
 app.post("/regAcc", (req,res) =>{
@@ -76,6 +295,51 @@ app.post("/regAcc", (req,res) =>{
         }       
     })  
 })
+
+app.post("/crmat", (req,res) =>{
+    const {cursname, curscost,cursdur,curstime} = req.body
+    db.all(`select * from Studm where Cursname = '${cursname}'`, (err, rows)=>
+    { 
+        if(err)
+            {
+                throw err;
+            }
+        if (rows.length > 0)
+        {
+            res.send("already")
+        }
+        else
+        {
+            db.all(`INSERT INTO Studm (CursName, CreditCost,CoursDuration,TeachHours) VALUES ('${cursname}','${curscost}','${cursdur}','${curstime}'); `, (err, result)=>
+            {               
+                if(err)
+                {
+                    throw err;
+                }
+                else{
+                    res.send("sled")
+                }
+            })
+        }
+        
+    })  
+})
+
+app.post("/crreq", (req,res) =>{
+    const {cursid, reqid2} = req.body
+
+
+    db.all(`INSERT INTO Matreq (CursId, ReqId) VALUES ('${cursid}','${reqid2}'); `, (err, rows)=>
+    {
+        
+        if(err)
+            {
+                throw err;
+            }
+        
+    })  
+})
+
 
 
 app.listen(3001 , () => console.log("Listening at port 3001"))

@@ -1,9 +1,11 @@
-import React, { Component} from 'react'
+import React from 'react'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
 
-export default class Regist extends Component {
-  render() {
+export const Regist = ( ) => {
+  const navigate = useNavigate(); 
     const onFinish = e => {
+      e.preventDefault();
       const name = e.target.uname.value;
       const nickname = e.target.unickname.value;
       const email = e.target.uemail.value;
@@ -12,6 +14,9 @@ export default class Regist extends Component {
       .then(res =>{
         if(res.data === "allmail"){
           alert("Аккаунт с этой почтой уже существует") 
+        }
+        else{
+          navigate('/login');
         }
       })
     }
@@ -77,5 +82,4 @@ export default class Regist extends Component {
         </p>
       </form>
     )
-  }
 }

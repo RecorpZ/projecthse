@@ -1,18 +1,40 @@
-import React, { Component} from 'react'
+import React from 'react'
 import axios from "axios"
-
+import { useNavigate } from 'react-router-dom';
 
 export const Login = ( ) => {
+const navigate = useNavigate(); 
  const OnFinish = e => {
     e.preventDefault();
+    
+
     const email = e.target.uemail.value;
     const password = e.target.upassword.value;
+
+    function getName() {
+      axios.post("http://localhost:3001/getname",{email})
+      .then(res =>{localStorage.setItem('UserName', res.data);})
+
+    }
+    
+    function getNickname() {
+      axios.post("http://localhost:3001/getnickname",{email})
+      .then(res =>{localStorage.setItem('UserNickname', res.data);})
+    }
     axios.post("http://localhost:3001/loginAcc",{email, password})
     .then(res =>{
       console.log(res.data)
       if(res.data === "AccountConfirmed"){
         console.log("Вход выполнен") 
+        getName(email)
+        getNickname(email)
 
+        localStorage.setItem('Token', "Pass");
+        localStorage.setItem('UserLogin', email);
+        setTimeout(() => {
+        navigate('/',{ replace: true });
+        window.location.reload();
+        }, 500);
       }
       
       if(res.data === "NOAccount"){
@@ -50,19 +72,6 @@ export const Login = ( ) => {
               className="form-control"
               placeholder="Напишите пароль"
             />
-          </div>
-  
-          <div className="mb-3">
-            <div className="custom-control custom-checkbox">
-              <input
-                type="checkbox"
-                className="custom-control-input"
-                id="customCheck1"
-              />
-              <label className="custom-control-label" htmlFor="customCheck1">
-                Запомнить меня
-              </label>
-            </div>
           </div>
   
           <div className="d-grid">
