@@ -1,0 +1,25 @@
+# Выберите базовый образ Node.js
+FROM node:20
+
+# Создайте директорию для приложения
+WORKDIR /hse-project/server
+
+# Копируйте файлы package.json и package-lock.json
+COPY package*.json ./
+
+# Установите зависимости
+RUN npm install
+
+RUN npm install sqlite3
+
+RUN npm install bcrypt
+
+# Копируйте исходный код приложения
+COPY . .
+
+# Откройте порт, который будет слушать ваше приложение
+EXPOSE 3000
+EXPOSE 3001
+
+# Запустите приложение
+CMD ["npm", "start"]
