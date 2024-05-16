@@ -1,10 +1,9 @@
 const express = require("express")
 const app = express()
 const cors = require("cors")
-const sqlite3 = require("sqlite3")
+const sqlite3 = require("sqlite3").verbose()
 const bcrypt = require("bcrypt")
 const axios = require("axios")
-const { json } = require("react-router-dom")
 const saltRounds = 12;
 
 app.use(cors())
