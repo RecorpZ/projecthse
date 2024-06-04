@@ -7,30 +7,29 @@ const navigate = useNavigate();
  const OnFinish = e => {
     e.preventDefault();
     
-
-    const email = e.target.uemail.value;
+    const login = e.target.ulogin.value;
     const password = e.target.upassword.value;
 
-    function getName() {
-      axios.post("http://localhost:3001/getname",{email})
-      .then(res =>{localStorage.setItem('UserName', res.data);})
-
-    }
+    // function getName() {
+    //   axios.post("http://localhost:3001/getname",{email})
+    //   .then(res =>{localStorage.setItem('UserName', res.data);})
+    // }
     
-    function getNickname() {
-      axios.post("http://localhost:3001/getnickname",{email})
-      .then(res =>{localStorage.setItem('UserNickname', res.data);})
-    }
-    axios.post("http://localhost:3001/loginAcc",{email, password})
+    // function getNickname() {
+    //   axios.post("http://localhost:3001/getnickname",{email})
+    //   .then(res =>{localStorage.setItem('UserNickname', res.data);})
+    // }
+
+    axios.post("http://localhost:3001/user/loginAcc",{login, password})
     .then(res =>{
       console.log(res.data)
       if(res.data === "AccountConfirmed"){
         console.log("Вход выполнен") 
-        getName(email)
-        getNickname(email)
+        // getName(email)
+        // getNickname(email)
 
         localStorage.setItem('Token', "Pass");
-        localStorage.setItem('UserLogin', email);
+        localStorage.setItem('UserLogin', login);
         setTimeout(() => {
         navigate('/',{ replace: true });
         window.location.reload();
@@ -51,14 +50,14 @@ const navigate = useNavigate();
     <form class="form-login" onSubmit= {OnFinish}>
           <h3>Вход в аккаунт</h3>
           <div className="mb-3">
-            <label>Электронная почта</label>
+            <label>Логин</label>
             <input
               minLength={3}
               required
-              name = "uemail"
-              type="email"
+              name = "ulogin"
+              type="text"
               className="form-control"
-              placeholder="Напишите адрес"
+              placeholder="Напишите логин"
             />
           </div>
 

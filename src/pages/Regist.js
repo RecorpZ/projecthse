@@ -6,11 +6,13 @@ export const Regist = ( ) => {
   const navigate = useNavigate(); 
     const onFinish = e => {
       e.preventDefault();
-      const name = e.target.uname.value;
-      const nickname = e.target.unickname.value;
-      const email = e.target.uemail.value;
+      const role = e.target.urole.value;
+      const first_name = e.target.ufirst_name.value;
+      const second_name = e.target.usecond_name.value;
+      const last_name = e.target.ulast_name.value;
+      const login = e.target.ulogin.value;
       const password = e.target.upassword.value;
-      axios.post("http://localhost:3001/regAcc", {name,nickname,email,password})
+      axios.post("http://localhost:3001/user/regAcc", {role,first_name,second_name,last_name,login,password})
       .then(res =>{
         if(res.data === "allmail"){
           alert("Аккаунт с этой почтой уже существует") 
@@ -21,15 +23,25 @@ export const Regist = ( ) => {
       })
     }
     return (
-
-
       <form class='form-login' onSubmit={onFinish}>
         <h3>Регистрация аккаунта</h3>
+        <div className="mb-3">
+          <label>Роль</label>
+          <div>
+            <input type="radio" id="teacher" name="urole" value="Teacher" checked />
+            <label for="teacher">Teacher</label>
+          </div>
+          <div>
+            <input type="radio" id="student" name="urole" value="Student" checked />
+            <label for="Student">Student</label>
+          </div>
+        </div>
+
         <div className="mb-3">
           <label>Имя</label>
           <input
             required
-            name = "uname"
+            name = "ufirst_name"
             minLength={2}
             type="text"
             className="form-control"
@@ -42,30 +54,42 @@ export const Regist = ( ) => {
           <input 
             type="text"
             required
-            name = "unickname"
+            name = "ulast_name"
             minLength={2}
            className="form-control"
            placeholder="Введите фамилию" />
         </div>
-
+        
         <div className="mb-3">
-          <label>Электронная почта</label>
+          <label>Отчество</label>
           <input
             required
-            name = "uemail"
-            minLength={3}
-            type="email"
+            name = "usecond_name"
+            minLength={2}
+            type="text"
             className="form-control"
-            placeholder="Введите почту"
+            placeholder="Введите Отчество"
+          />
+        </div>
+
+        <div className="mb-3">
+          <label>Логин</label>
+          <input
+            required
+            name = "ulogin"
+            minLength={2}
+            type="text"
+            className="form-control"
+            placeholder="Введите имя"
           />
         </div>
 
         <div className="mb-3">
           <label>Пароль</label>
           <input
+            minLength={6}
             required
             name = "upassword"
-            minLength={3}
             type="password"
             className="form-control"
             placeholder="Введите пароль"
