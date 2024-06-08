@@ -4,7 +4,7 @@ const db = require('../db-config')
 const bcrypt = require("bcrypt")
 const saltRounds = 12;
 
-router.post("/loginAcc", (req,res) =>{
+router.post("/login", (req,res) =>{
     const {login,password} = req.body
 
     db.all(`SELECT password_hash FROM Teachers WHERE login = '${login}' `, (err, rows)=>{
@@ -53,8 +53,8 @@ router.post("/loginAcc", (req,res) =>{
     } )
 });
 
-router.post("/regAcc", (req,res) =>{
-    const {role, first_name, second_name, last_name, login, password} = req.body
+router.post("/register", (req,res) =>{
+    const {role, first_name, second_name, last_name, login, password, courseId} = req.body
     const hashedPassword = bcrypt.hashSync(password, saltRounds);
     db.all(`SELECT * FROM Teachers WHERE login = '${login}'`, (err, rows)=>
     { 
@@ -91,7 +91,7 @@ router.post("/regAcc", (req,res) =>{
         });
     }
     else{
-        db.all(`INSERT INTO Students (first_name, second_name, last_name, login, password_hash) VALUES ('${first_name}','${second_name}','${last_name}','${login}','${hashedPassword}'); `, (err, result)=>
+        db.all(`INSERT INTO Students (first_name, second_name, last_name, login, password_hash, idCourse, own_company) VALUES ('${first_name}','${second_name}','${last_name}','${login}','${hashedPassword}',${courseId},false); `, (err, result)=>
         {               
             if(err)
             {

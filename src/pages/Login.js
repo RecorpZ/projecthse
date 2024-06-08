@@ -20,7 +20,7 @@ const navigate = useNavigate();
     //   .then(res =>{localStorage.setItem('UserNickname', res.data);})
     // }
 
-    axios.post("http://localhost:3001/user/loginAcc",{login, password})
+    axios.post("http://localhost:3001/user/login",{login, password})
     .then(res =>{
       console.log(res.data)
       if(res.data === "AccountConfirmed"){
@@ -52,7 +52,7 @@ const navigate = useNavigate();
           <div className="mb-3">
             <label>Логин</label>
             <input
-              minLength={3}
+              minLength={6}
               required
               name = "ulogin"
               type="text"

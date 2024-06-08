@@ -15,6 +15,18 @@ app.use(express.json({limit:'10mb'}));
 // Routers
 const userRouter = require('./routes/Users');
 app.use('/user', userRouter);
+const courseRouter = require('./routes/Courses');
+app.use('/courses', courseRouter);
+const companyRouter = require('./routes/Companies');
+app.use('/companies', companyRouter);
+const documentRouter = require('./routes/Documents');
+app.use('/documents', documentRouter);
+const studentRouter = require('./routes/Students');
+app.use('/students', studentRouter);
+const studentcompanyRouter = require('./routes/StudentsCompanies');
+app.use('/studentscompanies', studentcompanyRouter);
+const companycourseRouter = require('./routes/CompaniesCourses');
+app.use('/companiescourses', companycourseRouter);
 
 app.listen(3001 , () => console.log("Listening at port 3001"));
 

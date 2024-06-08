@@ -1,8 +1,16 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 
 export const Regist = ( ) => {
+  const [role, setRole] = useState([]);
+  const [courses, setCourses] = useState([]);
+  useEffect(()=>{
+      axios.get("http://localhost:3001/courses/")
+      .then(res => setCourses(res.data))
+      .catch(err => console.log(err))
+  },[]);
+
   const navigate = useNavigate(); 
     const onFinish = e => {
       e.preventDefault();
@@ -12,7 +20,11 @@ export const Regist = ( ) => {
       const last_name = e.target.ulast_name.value;
       const login = e.target.ulogin.value;
       const password = e.target.upassword.value;
-      axios.post("http://localhost:3001/user/regAcc", {role,first_name,second_name,last_name,login,password})
+      let courseId = 0;
+      if (role === "student"){
+        courseId = e.target.ucourse.value;
+      }
+      axios.post("http://localhost:3001/user/register", {role,first_name,second_name,last_name,login,password,courseId})
       .then(res =>{
         if(res.data === "allmail"){
           alert("Аккаунт с этой почтой уже существует") 
@@ -22,18 +34,23 @@ export const Regist = ( ) => {
         }
       })
     }
+    
+    const handleRole = (event) => {
+      setRole({...role, role: event.target.value});
+    };
+
     return (
       <form class='form-login' onSubmit={onFinish}>
         <h3>Регистрация аккаунта</h3>
         <div className="mb-3">
           <label>Роль</label>
           <div>
-            <input type="radio" id="teacher" name="urole" value="Teacher" checked />
+            <input type="radio" id="teacher" name="urole" value="teacher" onChange={handleRole} />
             <label for="teacher">Teacher</label>
           </div>
           <div>
-            <input type="radio" id="student" name="urole" value="Student" checked />
-            <label for="Student">Student</label>
+            <input type="radio" id="student" name="urole" value="student" onChange={handleRole} />
+            <label for="student">Student</label>
           </div>
         </div>
 
@@ -77,7 +94,7 @@ export const Regist = ( ) => {
           <input
             required
             name = "ulogin"
-            minLength={2}
+            minLength={6}
             type="text"
             className="form-control"
             placeholder="Введите имя"
@@ -95,6 +112,17 @@ export const Regist = ( ) => {
             placeholder="Введите пароль"
           />
         </div>
+
+        {role.role === "student" &&  
+          <div className="mb-3">
+            <label>Курс</label>
+            <select name="ucourse">
+              {courses.map((course, index) => {
+                return <option value={course.id}>{course.name}</option>
+              })}
+            </select>
+          </div>
+        }
 
         <div className="d-grid">
           <button type="submit" className="btn btn-primary">
