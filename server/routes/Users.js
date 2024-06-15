@@ -82,7 +82,7 @@ router.post("/register", (req,res) =>{
     });
     if (role === "Teacher")
     {
-        db.all(`INSERT INTO Teachers (first_name, second_name, last_name, login, password_hash) VALUES ('${first_name}','${second_name}','${last_name}','${login}','${hashedPassword}'); `, (err, result)=>
+        db.all(`INSERT INTO Teachers (first_name, second_name, last_name, login, password_hash) VALUES (?, ?, ?, ?, ?); `, [first_name, second_name, last_name, login, hashedPassword], (err, result)=>
         {               
             if(err)
             {
@@ -91,7 +91,7 @@ router.post("/register", (req,res) =>{
         });
     }
     else{
-        db.all(`INSERT INTO Students (first_name, second_name, last_name, login, password_hash, idCourse, own_company) VALUES ('${first_name}','${second_name}','${last_name}','${login}','${hashedPassword}',${courseId},false); `, (err, result)=>
+        db.all(`INSERT INTO Students (first_name, second_name, last_name, login, password_hash, idCourse, own_company) VALUES (?, ?, ?, ?, ?, ?, 0); `, [first_name, second_name, last_name, login, hashedPassword, courseId], (err, result)=>
         {               
             if(err)
             {

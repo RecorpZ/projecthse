@@ -16,6 +16,8 @@ import { Logout } from '../pages/Logout'
 import {PrivateRoute} from './privateroute'
 import {Creatematerials} from "../pages/CreateMater"
 import { CreatePlans } from '../pages/CreatPlans'
+import { TeachersCompanies } from "../pages/teachers/TeachersCompanies"
+import { TeachersRequests } from '../pages/teachers/TeachersRequests'
 
 export const Header = ( ) => {
   
@@ -88,6 +90,8 @@ const token = localStorage.getItem('Token');
                 <Route path="/studmaterials" element={<Studmaterials />} />
                 <Route path="/misc" element={<Misc/>} />
                 <Route path="/logout" element={<Logout/>} />
+                <Route path="/teacherscomp" element={<TeachersCompanies/>} />
+                <Route path="/teachersrequests" element={<TeachersRequests/>} />
               </Route>
               <Route element={<PrivateAcc/>}>
               <Route path="/reg" element={<Regist/>} />
