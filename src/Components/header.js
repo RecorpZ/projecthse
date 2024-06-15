@@ -4,18 +4,20 @@ import exit from "./box-arrow-right.svg"
 import {Routes,BrowserRouter as Router, Route} from "react-router-dom"
 
 import {Home} from '../pages/Home'
-import {Redactmaterials} from "../pages/RedMater"
-import {Studmaterials} from '../pages/Studmaterials'
-import {Plans} from '../pages/Plans'
-import {Misc} from '../pages/Misc'
+// import {Redactmaterials} from "../pages/RedMater"
+// import {Studmaterials} from '../pages/Studmaterials'
+// import {Plans} from '../pages/Plans'
+// import {Misc} from '../pages/Misc'
 import {Regist} from '../pages/Regist'
-import {Test} from '../pages/Test'
+// import {Test} from '../pages/Test'
 import {Login} from '../pages/Login'
 import { PrivateAcc } from './privateacc'
 import { Logout } from '../pages/Logout'
 import {PrivateRoute} from './privateroute'
-import {Creatematerials} from "../pages/CreateMater"
-import { CreatePlans } from '../pages/CreatPlans'
+// import {Creatematerials} from "../pages/CreateMater"
+// import { CreatePlans } from '../pages/CreatPlans'
+import {PStudentHasCompany} from '../pages/students/PStudentHasCompany'
+import {PStudentAttachCard} from '../pages/students/PStudentAttachCard'
 
 export const Header = ( ) => {
   
@@ -80,13 +82,15 @@ const token = localStorage.getItem('Token');
           <Routes>
               <Route path="/" element={<Home />} />
               <Route element={<PrivateRoute />}>
-                <Route path="/cremat" element={<Creatematerials/>} />
+                {/* <Route path="/cremat" element={<Creatematerials/>} />
                 <Route path="/redmat" element={<Redactmaterials/>} />
                 <Route path="/creplan" element={<CreatePlans/>} />
                 <Route path="/test" element={<Test/>} />
                 <Route path="/plans" element={<Plans />} />
                 <Route path="/studmaterials" element={<Studmaterials />} />
-                <Route path="/misc" element={<Misc/>} />
+                <Route path="/misc" element={<Misc/>} /> */}
+                <Route path="/student/hascompany" element={<PStudentHasCompany/>} />
+                <Route path="/student/attachcard" element={<PStudentAttachCard/>} />
                 <Route path="/logout" element={<Logout/>} />
               </Route>
               <Route element={<PrivateAcc/>}>

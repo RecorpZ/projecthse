@@ -10,26 +10,23 @@ const navigate = useNavigate();
     const login = e.target.ulogin.value;
     const password = e.target.upassword.value;
 
-    // function getName() {
-    //   axios.post("http://localhost:3001/getname",{email})
-    //   .then(res =>{localStorage.setItem('UserName', res.data);})
-    // }
-    
-    // function getNickname() {
-    //   axios.post("http://localhost:3001/getnickname",{email})
-    //   .then(res =>{localStorage.setItem('UserNickname', res.data);})
-    // }
-
     axios.post("http://localhost:3001/user/login",{login, password})
     .then(res =>{
       console.log(res.data)
       if(res.data === "AccountConfirmed"){
         console.log("Вход выполнен") 
-        // getName(email)
-        // getNickname(email)
 
+        axios.post("http://localhost:3001/user/getbylogin",{login})
+          .then(res => {
+            let user = res.data.user;
+            let role = res.data.role;
+            localStorage.setItem('UserId', user.id);
+            localStorage.setItem('Role', role);
+          });
+        
         localStorage.setItem('Token', "Pass");
         localStorage.setItem('UserLogin', login);
+
         setTimeout(() => {
         navigate('/',{ replace: true });
         window.location.reload();

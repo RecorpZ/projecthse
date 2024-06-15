@@ -4,6 +4,34 @@ const db = require('../db-config')
 const bcrypt = require("bcrypt")
 const saltRounds = 12;
 
+router.post("/getbylogin", (req,res) =>{
+    db.all(`SELECT * FROM Teachers WHERE login = ?`, [req.body.login], (err, rows)=>{
+        if(err){
+            throw err;
+        }
+        if (rows.length > 0)
+        {
+            res.send({user: rows[0], role: "teacher"});
+        }
+        else
+        {
+            db.all(`SELECT * FROM Students WHERE login = ?`, [req.body.login], (err, rows)=>{
+                if(err){
+                    throw err;
+                }
+                if (rows.length > 0)
+                {
+                    res.send({user: rows[0], role: "student"});
+                }
+                else
+                {
+                    res.send(undefined);
+                }
+            } )
+        }
+    } )
+});
+
 router.post("/login", (req,res) =>{
     const {login,password} = req.body
 
@@ -64,8 +92,9 @@ router.post("/register", (req,res) =>{
             }
         if (rows.length > 0)
         {
-            console.log('oshibka')
+            console.log('exists')
             res.send("allmail")
+            return;
         }
     });
     db.all(`SELECT * FROM Students WHERE login = '${login}'`, (err, rows)=>
@@ -76,8 +105,9 @@ router.post("/register", (req,res) =>{
             }
         if (rows.length > 0)
         {
-            console.log('oshibka')
+            console.log('exists')
             res.send("allmail")
+            return;
         }
     });
     if (role === "Teacher")
@@ -88,6 +118,8 @@ router.post("/register", (req,res) =>{
             {
                 throw err;
             }
+            console.log(result);
+            res.send("Ok");
         });
     }
     else{
@@ -97,6 +129,8 @@ router.post("/register", (req,res) =>{
             {
                 throw err;
             }
+            console.log(result);
+            res.send("Ok");
         })
     }
 });
