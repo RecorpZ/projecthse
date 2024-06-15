@@ -27,9 +27,17 @@ export const Regist = ( ) => {
       axios.post("http://localhost:3001/user/register", {role,first_name,second_name,last_name,login,password,courseId})
       .then(res =>{
         if(res.data === "allmail"){
-          alert("Аккаунт с этой почтой уже существует") 
+          alert("Аккаунт с этим логином уже существует");
         }
         else{
+          axios.post("http://localhost:3001/user/getbylogin",{login})
+            .then(res => {
+              let user = res.data.user;
+              let idStudent = user.id;
+              axios.post("http://localhost:3001/documents",{idStudent})
+              .catch(err => alert(err));
+            })
+            .catch(err => alert(err));
           navigate('/login');
         }
       })
