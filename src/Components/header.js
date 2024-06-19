@@ -19,6 +19,7 @@ import {PStudentHasCompany} from '../pages/students/PStudentHasCompany'
 import {PStudentAttachCard} from '../pages/students/PStudentAttachCard'
 
 import { TeachersCompanies } from "../pages/teachers/TeachersCompanies"
+import { TeachersCompaniesUpdate } from "../pages/teachers/EditTeachersCompanies"
 import { TeachersRequests } from '../pages/teachers/TeachersRequests'
 
 export const Header = ( ) => {
@@ -88,6 +89,7 @@ const token = localStorage.getItem('Token');
                 <Route path="/student/attachcard" element={<PStudentAttachCard/>} />
                 <Route path="/logout" element={<Logout/>} />
                 <Route path="/teacherscomp" element={<TeachersCompanies/>} />
+                <Route path="/teacherscompUpdate/:idCompany/:idCourse" element={<TeachersCompaniesUpdate/>} />
                 <Route path="/teachersrequests" element={<TeachersRequests/>} />
               </Route>
               <Route element={<PrivateAcc/>}>
