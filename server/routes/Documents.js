@@ -33,6 +33,14 @@ router.get("/", (req,res) =>{
     });
 });
 
+router.get("/contractexists/:idStudent", (req,res) =>{
+    const sql = `SELECT contract_path FROM documents WHERE idStudent = ?`;
+    db.all(sql, [req.params.idStudent], (err, result)=>{
+        if(err) throw err;
+        res.send(result.length > 0);
+    });
+});
+
 router.post("/", (req,res) =>{
     console.log(req.body)
     const sql = `INSERT INTO documents (idStudent) VALUES (?)`;

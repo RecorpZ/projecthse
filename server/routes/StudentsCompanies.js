@@ -28,16 +28,24 @@ router.get("/students/:id", (req,res) =>{
 });
 
 router.post("/", (req,res) =>{
-    const sql = `INSERT studentscompanies(idstudent, idcompany, priority, status) VALUES(?, ?, ?, ?)`;
-    db.all(sql, [req.body.idStudent, req.body.idCompany, req.body.priority, req.body.status], (err, result)=>{
+    const sql = `INSERT INTO studentscompanies(idStudent, idCompany, priority, status) VALUES(?, ?, ?, 0)`;
+    db.all(sql, [req.body.idStudent, req.body.idCompany, req.body.priority], (err, result)=>{
         if(err) throw err;
         res.send();
     });
 });
 
-router.put("/:id", (req,res) =>{
-    const sql = `UPDATE studentscompanies SET idstudent = ?, idcompany = ?, priority = ?, status = ? WHERE id = ?`;
-    db.all(sql, [req.body.idStudent, req.body.idCompany, req.body.priority, req.body.status, req.params.id], (err, result)=>{
+router.put("/setPriority/:idStudent", (req,res) =>{
+    const sql = `UPDATE studentscompanies SET priority = ? WHERE idStudent = ?`;
+    db.all(sql, [req.body.priority, req.params.idStudent], (err, result)=>{
+        if(err) throw err;
+        res.send();
+    });
+});
+
+router.put("/setStatus/:idStudent", (req,res) =>{
+    const sql = `UPDATE studentscompanies SET status = ? WHERE idStudent = ?`;
+    db.all(sql, [req.body.status, req.params.idStudent], (err, result)=>{
         if(err) throw err;
         res.send();
     });
