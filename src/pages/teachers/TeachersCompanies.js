@@ -62,11 +62,13 @@ export const TeachersCompanies = ( ) => {
       <div>
         <table border="2px" border-collapse="collapse">
           <thead>
-            <th>Компания</th>
-            <th>Контакты</th>
-            <th>Направление</th>
-            <th>Кол-во мест</th>
-            <th>123</th>
+            <tr>
+              <th>Компания</th>
+              <th>Контакты</th>
+              <th>Направление</th>
+              <th>Кол-во мест</th>
+              <th>123</th>
+            </tr>
           </thead>
           <tbody>
             {companiesCourses.map((cc, index) => {
