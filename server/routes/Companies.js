@@ -33,7 +33,7 @@ router.post("/getCompaniesByIdStudent", (req,res) =>{
     const sql = `SELECT Companies.id, Companies.name FROM CompaniesCourses
         JOIN Companies ON Companies.id = CompaniesCourses.idCompany
         JOIN Students ON Students.idCourse = CompaniesCourses.idCourse
-        WHERE Students.id = ? 
+        WHERE Students.id = ?
         AND NOT EXISTS(SELECT * FROM StudentsCompanies 
             WHERE StudentsCompanies.idStudent = Students.id AND StudentsCompanies.idCompany = Companies.id)`;
     db.all(sql, [req.body.idStudent], (err, result)=>{

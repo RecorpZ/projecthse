@@ -4,10 +4,19 @@ import { useNavigate } from 'react-router-dom';
 
 export const StudentApplicationsStatus = ( ) => {
     const [companies, setCompanies] = useState([]);
+    
     const idStudent = localStorage.getItem('UserId');
 
     const navigate = useNavigate();
+
     useEffect(() => {
+      // проверка шага
+      axios.get("http://localhost:3001/students/getStep/"+idStudent)
+      .then(res => {
+          let step = res.data.step;
+          if (step != 8) navigate('/student/');
+        });
+
       // TODO get companies with priority 1-3
       axios.post("http://localhost:3001/companies/getCompaniesStatusesByIdStudent",{idStudent})
       .then(result => { 

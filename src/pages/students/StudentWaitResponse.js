@@ -6,7 +6,15 @@ export const StudentWaitResponse = ( ) => {
     const idStudent = localStorage.getItem('UserId');
 
     const navigate = useNavigate();
+
     useEffect(() => {
+      // проверка шага
+      axios.get("http://localhost:3001/students/getStep/"+idStudent)
+      .then(res => {
+          let step = res.data.step;
+          if (step != 2) navigate('/student/');
+        });
+
       // получить информацию есть ли файл
       let contractexists;
       axios.get("http://localhost:3001/documents/contractexists/"+idStudent)
@@ -21,7 +29,6 @@ export const StudentWaitResponse = ( ) => {
         }})
       .catch(err => {console.log(err); return;});
       }, []);
-
 
     return (
       <form class='form-login'>

@@ -13,6 +13,16 @@ export const StudentWaitApprove = ( ) => {
       }, []);
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+      // проверка шага
+      axios.get("http://localhost:3001/students/getStep/"+idStudent)
+      .then(res => {
+          let step = res.data.step;
+          if (step != 5) navigate('/student/');
+        });
+      });
+
     const onFinish = e => {
       e.preventDefault();
 

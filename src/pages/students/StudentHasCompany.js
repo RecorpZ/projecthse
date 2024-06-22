@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 
@@ -8,17 +8,29 @@ export const StudentHasCompany = ( ) => {
     const idStudent = localStorage.getItem('UserId'); 
 
     const navigate = useNavigate(); 
+
+    useEffect(() => {
+      // проверка шага
+      axios.get("http://localhost:3001/students/getStep/"+idStudent)
+      .then(res => {
+          let step = res.data.step;
+          if (step != 0) navigate('/student/');
+        });
+      });
+
     const onFinish = e => {
       e.preventDefault();
       // установить значение, есть ли компания
       axios.put("http://localhost:3001/students/setOwnCompany/"+idStudent, {hasCompany})
+      .then(res => {
+        // установить шаг
+        let step = hasCompany == 1 ? 1 : 6;
+        axios.put("http://localhost:3001/students/setStep/"+idStudent, {step})
+        .then(res => {navigate('/student/');})
+        .catch(err => console.log(err));
+      })
       .catch(err => {console.log(err); return;});
       
-      // установить шаг
-      let step = hasCompany == 1 ? 1 : 6;
-      axios.put("http://localhost:3001/students/setStep/"+idStudent, {step})
-      .then(navigate('/student/'))
-      .catch(err => console.log(err));
     }
     
     const handleHasCompany = (event) => {
@@ -35,7 +47,7 @@ export const StudentHasCompany = ( ) => {
               <label for="yes">Да</label>
             </div>
             <div>
-              <input type="radio" id="no" name="hascompany" value="0" onChange={handleHasCompany} />
+              <input type="radio" id="no" name="hascompany" value="0" onChange={handleHasCompany} checked/>
               <label for="no">Нет</label>
             </div>
             <button type="submit" className="btn btn-success">Далее</button>

@@ -1,11 +1,21 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
 
 export const StudentAccepted = ( ) => {
     const [company, setCompany] = useState();
     const idStudent = localStorage.getItem('UserId');
 
+    const navigate = useNavigate();
+    
     useEffect(() => {
+      // проверка шага
+      axios.get("http://localhost:3001/students/getStep/"+idStudent)
+      .then(res => {
+          let step = res.data.step;
+          if (step != 9) navigate('/student/');
+        });
+
         // get company with accepted status and highest priority
         axios.post("http://localhost:3001/companies/getAcceptedCompanyByIdStudent",{idStudent})
         .then(res => { setCompany(res.data[0])});

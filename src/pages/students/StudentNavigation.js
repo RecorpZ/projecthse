@@ -6,6 +6,7 @@ export const StudentNavigation = () => {
     const idStudent = localStorage.getItem('UserId');
     const role = localStorage.getItem('Role');
 
+    const navigate = useNavigate();
     useEffect(() => {
         axios.get("http://localhost:3001/students/getStep/"+idStudent)
         .then(res => {
@@ -48,8 +49,6 @@ export const StudentNavigation = () => {
         })
         .catch(err => console.log(err));
     }, []);
-
-    const navigate = useNavigate();
 
     return (<div></div>)
 }

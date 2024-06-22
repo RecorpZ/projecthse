@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 
@@ -14,6 +14,16 @@ export const StudentDownloadContract = ( ) => {
     const idStudent = localStorage.getItem('UserId');
 
     const navigate = useNavigate();
+    
+    useEffect(() => {
+      // проверка шага
+      axios.get("http://localhost:3001/students/getStep/"+idStudent)
+      .then(res => {
+          let step = res.data.step;
+          if (step != 3) navigate('/student/');
+        });
+      });
+
     const onFinish = e => {
       e.preventDefault();
 

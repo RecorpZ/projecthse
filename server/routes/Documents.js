@@ -37,7 +37,7 @@ router.get("/contractexists/:idStudent", (req,res) =>{
     const sql = `SELECT contract_path FROM documents WHERE idStudent = ?`;
     db.all(sql, [req.params.idStudent], (err, result)=>{
         if(err) throw err;
-        res.send(result.length > 0);
+        res.send(result[0].contract_path != null);
     });
 });
 
@@ -94,28 +94,28 @@ router.put("/factorycardpath/:id", upload.single("file"), (req,res) =>{
     }
 });
 
-router.put("/contactpath/:id", upload.single("file"), (req,res) =>{
+router.put("/contractpath/:id", upload.single("file"), (req,res) =>{
     if (!req.file) 
     {
         console.log("No file upload");
         res.send("NoFile");
     }
     var file_path = req.file.filename;
-    const sql = `UPDATE documents SET contact_path = ? WHERE idStudent = ?`;
+    const sql = `UPDATE documents SET contract_path = ? WHERE idStudent = ?`;
     db.all(sql, [file_path, req.params.id], (err, result)=>{
         if(err) throw err;
         res.send();
     });
 });
 
-router.put("/signedcontactpath/:id", upload.single("file"), (req,res) =>{
+router.put("/signedcontractpath/:id", upload.single("file"), (req,res) =>{
     if (!req.file) 
     {
         console.log("No file upload");
         res.send("NoFile");
     }
     var file_path = req.file.filename;
-    const sql = `UPDATE documents SET signed_contact_path = ? WHERE idStudent = ?`;
+    const sql = `UPDATE documents SET signed_contract_path = ? WHERE idStudent = ?`;
     db.all(sql, [file_path, req.params.id], (err, result)=>{
         if(err) throw err;
         res.send();

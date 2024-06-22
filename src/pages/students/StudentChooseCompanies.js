@@ -8,6 +8,14 @@ export const StudentChooseCompanies = ( ) => {
     var [count_choices, setCountChoices] = useState(0);
 
     useEffect(() => {
+      // проверка шага
+      axios.get("http://localhost:3001/students/getStep/"+idStudent)
+      .then(res => {
+          let step = res.data.step;
+          if (step != 7) navigate('/student/');
+        });
+
+      // получить список компаний
       axios.post("http://localhost:3001/companies/getCompaniesByIdStudent",{idStudent})
       .then(result => { setCompanies(result.data)})
       .catch(err => console.log(err));
@@ -28,19 +36,20 @@ export const StudentChooseCompanies = ( ) => {
         let idCompany = company.id
         let priority = company.priority
         axios.post("http://localhost:3001/studentscompanies", {idStudent, idCompany, priority})
+        .then(res => {
+          // установить шаг
+          let step = 8;
+          axios.put("http://localhost:3001/students/setStep/"+idStudent, {step})
+          .then(res => navigate('/student/'))
+          .catch(err => console.log(err));
+        })
         .catch(err => {console.log(err); return;});
       }
-      
-      // установить шаг
-      let step = 8;
-      axios.put("http://localhost:3001/students/setStep/"+idStudent, {step})
-      .then(navigate('/student/'))
-      .catch(err => console.log(err));
     }
     
     const changeCompanyPriority = e => {
       let changedCompany = companies.filter((company) => company.id == e.target.value)[0]
-      let isChecked = companies.filter((company) => company.id == e.target.value && (company.priority == undefined || company.priority == 0) && count_choices < 3)[0] != undefined;
+      let isChecked = companies.filter((company) => company.id == e.target.value && (company.priority == undefined || company.priority == 0))[0] != undefined;
       console.log(isChecked);
       if (isChecked){
         setCountChoices(count_choices+1);
