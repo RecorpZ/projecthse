@@ -5,51 +5,95 @@ import { useNavigate } from 'react-router-dom';
 
 
 export const TeachersRequests = ( ) => { 
-  const [students, setStudents] = useState([]);
-  const [courses, setCourses] = useState([]);
-  const [companiesCourses, setCompaniesCourses] = useState([]);
+  // const [students, setStudents] = useState([]);
+  // const [courses, setCourses] = useState([]);
+  const [studentsCompanies, setStudentsCompanies] = useState([]);
   useEffect(()=>{
       console.log("new line")
-      axios.get("http://localhost:3001/Students/")
-      .then(res => {setStudents(res.data); console.log(res.data)})
-      .catch(err => console.log(err))
+      // axios.get("http://localhost:3001/Students/")
+      // .then(res => {setStudents(res.data); console.log(res.data)})
+      // .catch(err => console.log(err))
       
-      axios.get("http://localhost:3001/Courses/")
-      .then(res => {setCourses(res.data); console.log(res.data)})
-      .catch(err => console.log(err))
+      // axios.get("http://localhost:3001/Courses/")
+      // .then(res => {setCourses(res.data); console.log(res.data)})
+      // .catch(err => console.log(err))
 
-      axios.get("http://localhost:3001/CompaniesCourses/")
-      .then(res => {setCompaniesCourses(res.data); console.log(res.data)})
+      axios.get("http://localhost:3001/StudentsCompanies/normal")
+      .then(res => {setStudentsCompanies(res.data); console.log(res.data)})
       .catch(err => console.log(err))
   },[]);
 
-  const navigate = useNavigate(); 
+  async function updateStudentsCompanies(_idStudent, _company, _priority, _status) {
+    await axios.put(`http://localhost:3001/StudentsCompanies/${_idStudent}/${_company}`, {idStudent: _idStudent, idCompany: _company, priority: _priority, status: _status})
+    .then(res => {console.log(res)})
+    .catch(err => console.log(err))
+  }
 
+  const navigate = useNavigate();
+  // debugger;
   return (
     <div>
+      {/* <div> */}
+      {/* </div> */}
       <div>
-        <nav text-align="center">
-          <img sourse="public/logoHse.svg"/>
-        </nav>
-      </div>
-      <div>
-        <table>
+      {/* <img src="https://i.pinimg.com/736x/49/c4/99/49c499390ea5b29bd9afddce1bf58a2b.jpg"/> */}
+        <table border="2px" border-collapse="collapse">
           <thead>
-            <th>Студент</th>
-            <th>Своя компания?</th>
-            <th>Приоритет 1</th>
-            <th>Приоритет 2</th>
-            <th>Приоритет 3</th>
+            <tr>
+              <th>Студент</th>
+              <th>Своя компания?</th>
+              <th>Приоритет 1</th>
+              <th>Приоритет 2</th>
+              <th>Приоритет 3</th>
+            </tr>
           </thead>
           <tbody>
-            {students.map((student, index) => {
+            {studentsCompanies.map((sc, index) => {
               return <tr key={index}>
-                <td>{student.name}</td>
-                <td>{student.contacts}</td>
-                {/* <td>{courses.find(course => course.id === companiesCourses.find(cc => cc.idCompany === company.id)).name}</td> */}
-                <td>0</td>
-                <td>{student.places}</td>
-                <td>asd</td>
+                <td>{sc.name}</td>
+                <td>{sc.ownCompany === 1 ? "+" : "-"}</td>
+                <td>{sc.ownCompany === 0 ? <div>
+                  <p style={{color: "#888888", margin: "0px"}}>{sc.Company1Name}</p>
+                  <select value={sc.Company1Status} style={{background: sc.Company1Status === 1 ? "#99e9ff" : sc.Company1Status === 2 ? "#ffa5a6" : sc.Company1Status === 3 ? "#10ff4d" : "#FFFFFF"}} onChange={e => {setStudentsCompanies(studentsCompanies.map(sc1 => {
+                    if (sc1.idStudent === sc.idStudent) {
+                      return {...sc1, Company1Status: Number(e.target.value)};
+                    } else {
+                      return sc1;
+                    }
+                  })); console.log(studentsCompanies[index]); updateStudentsCompanies(studentsCompanies[index].idStudent, studentsCompanies[index].Company1, 1, Number(e.target.value))}}>
+                    <option value={0}>Рассмотрение</option>
+                    <option value={1}>Собеседование</option>
+                    <option value={2}>Отказ</option>
+                    <option value={3}>Принят</option>
+                  </select></div> : ""}</td>
+                <td>{sc.ownCompany === 0 ? <div>
+                  <p style={{color: "#888888", margin: "0px"}}>{sc.Company2Name}</p>
+                  <select value={sc.Company2Status} style={{background: sc.Company2Status === 1 ? "#99e9ff" : sc.Company2Status === 2 ? "#ffa5a6" : sc.Company2Status === 3 ? "#10ff4d" : "#FFFFFF"}} onChange={e => {setStudentsCompanies(studentsCompanies.map(sc1 => {
+                    if (sc1.idStudent === sc.idStudent) {
+                      return {...sc1, Company2Status: Number(e.target.value)};
+                    } else {
+                      return sc1;
+                    }
+                  })); updateStudentsCompanies(sc.idStudent, sc.Company2, 2, Number(e.target.value))}}>
+                    <option value={0}>Рассмотрение</option>
+                    <option value={1}>Собеседование</option>
+                    <option value={2}>Отказ</option>
+                    <option value={3}>Принят</option>
+                  </select></div> : ""}</td>
+                <td>{sc.ownCompany === 0 ? <div>
+                  <p style={{color: "#888888", margin: "0px"}}>{sc.Company3Name}</p>
+                  <select value={sc.Company3Status} style={{background: sc.Company3Status === 1 ? "#99e9ff" : sc.Company3Status === 2 ? "#ffa5a6" : sc.Company3Status === 3 ? "#10ff4d" : "#FFFFFF"}} onChange={e => {setStudentsCompanies(studentsCompanies.map(sc1 => {
+                    if (sc1.idStudent === sc.idStudent) {
+                      return {...sc1, Company3Status: Number(e.target.value)};
+                    } else {
+                      return sc1;
+                    }
+                  })); updateStudentsCompanies(sc.idStudent, sc.Company3, 3, Number(e.target.value))}}>
+                  <option value={0}>Рассмотрение</option>
+                  <option value={1} style={{background: "#ff1050"}}>Собеседование</option>
+                  <option value={2}>Отказ</option>
+                  <option value={3}>Принят</option>
+                  </select></div> : ""}</td>
               </tr>
             })}
           </tbody>

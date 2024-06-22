@@ -1,0 +1,114 @@
+{Teachers}
+[Teachers.create]
+"INSERT teachers(login, password, first_name, second_name, last_name) VALUES(?, ?, ?, ?, ?)"
+
+[Teachers.read]
+"SELECT * FROM teachers"
+
+[Teachers.read(id)]
+"SELECT * FROM teachers WHERE id = ?"
+
+[Teachers.update(id)]
+"UPDATE teachers SET login = ?, password = ?, first_name = ?, second_name = ?, last_name = ? WHERE id = ?"
+
+[Teachers.delete(id)]
+"DELETE FROM teachers WHERE id = ?"
+
+{Courses}
+[Courses.create]
+"INSERT courses(name) VALUES(?)"
+
+[Courses.read]
+"SELECT * FROM courses"
+
+[Courses.read(id)]
+"SELECT * FROM courses WHERE id = ?"
+
+[Courses.update(id)]
+"UPDATE courses SET name = ? WHERE id = ?"
+
+[Courses.delete(id)]
+"DELETE FROM courses WHERE id = ?"
+
+{Companies}
+[Companies.create]
+"INSERT companies(name, contacts, places) VALUES(?, ?, ?)"
+
+[Companies.read]
+"SELECT * FROM companies"
+
+[Companies.read(id)]
+"SELECT * FROM companies WHERE id = ?"
+
+[Companies.update(id)]
+"UPDATE companies SET name = ?, contacts = ?, places = ? WHERE id = ?"
+
+[Companies.delete(id)]
+"DELETE FROM companies WHERE id = ?"
+
+{Students}
+[Students.create]
+"INSERT students(login, password, first_name, second_name, last_name, idcourse, owncompany) VALUES(?, ?, ?, ?, ?, ?, ?)"
+
+[Students.read]
+"SELECT * FROM students"
+
+[Students.read(id)]
+"SELECT * FROM students WHERE id = ?"
+
+[Students.update(id)]
+"UPDATE students SET login = ?, password = ?, first_name = ?, second_name = ?, last_name = ?, idcourse = ?, owncompany = ? WHERE id = ?"
+
+[Students.delete(id)]
+"DELETE FROM students WHERE id = ?"
+
+{Documents}
+[Documents.create]
+"INSERT documents(idstudent, resumepath, factorycardpath, contactpath, signedcontactpath) VALUES(?, ?, ?, ?, ?)"
+
+[Documents.read]
+"SELECT * FROM documents"
+
+[Documents.read(id)]
+"SELECT * FROM documents WHERE id = ?"
+
+[Documents.update(id)]
+"UPDATE documents SET idstudent = ?, resumepath = ?, factorycardpath = ?, contactpath = ?, signedcontactpath = ? WHERE id = ?"
+
+[Documents.delete(id)]
+"DELETE FROM documents WHERE id = ?"
+
+{StudentsCompanies}
+[StudentsCompanies.create]
+"INSERT studentscompanies(idstudent, idcompany, priority, status) VALUES(?, ?, ?, ?)"
+
+[StudentsCompanies.read]
+"SELECT * FROM studentscompanies"
+
+[StudentsCompanies.read(idstudent)]
+"SELECT * FROM studentscompanies WHERE idstudent = ?"
+
+[StudentsCompanies.read(idcompany)]
+"SELECT * FROM studentscompanies WHERE idcompany = ?"
+
+[StudentsCompanies.update(id)]
+"UPDATE studentscompanies SET idstudent = ?, idcompany = ?, priority = ?, status = ? WHERE id = ?"
+
+[StudentsCompanies.delete(id)]
+"DELETE FROM studentscompanies WHERE id = ?"
+
+{CompaniesCourses}
+[CompaniesCourses.create]
+"INSERT companiescourses(idcompany, idcourse) VALUES(?, ?)"
+
+[CompaniesCourses.read]
+"SELECT * FROM companiescourses"
+
+[CompaniesCourses.read(idcourse)]
+"SELECT * FROM companiescourses WHERE idcourse = ?"
+
+[CompaniesCourses.read(idcompany)]
+"SELECT * FROM companiescourses WHERE idcompany = ?"
+
+[CompaniesCourses.delete(id)]
+"DELETE FROM companiescourses WHERE id = ?"
