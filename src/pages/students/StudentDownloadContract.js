@@ -26,23 +26,41 @@ export const StudentDownloadContract = ( ) => {
 
     const onFinish = e => {
       e.preventDefault();
+      e.stopPropagation();
 
-      // получить путь к файлу
-      //   const formData = new FormData();
-      //   formData.append("file", file);
-      //   formData.append("fileName", fileName);
-      // let path = ""
-      // axios.get("http://localhost:3001/documents/factorycardpath/"+idStudent)
-      // .then(res => {path = res.data})
-      // .catch(err => {console.log(err); return;});
-      
-      // location.href = path + file;
+      // const response = fetch("http://localhost:3001/documents/downloadcontract/"+idStudent);
+      // console.log(response);
+      axios.get("http://localhost:3001/documents/downloadcontract/"+idStudent)
+      .then(res => {
+          let step = res.data.step;
+          if (step != 3) navigate('/student/');
+          let response = res.data;
+          console.log(response);
+          const blob = response.blob();
+          const downloadURL = window.URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = downloadURL;
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+        })
+      .catch(err => console.log(err));
+
+      // console.log(response)
+      // const blob = response.blob();
+      // const downloadURL = window.URL.createObjectURL(blob);
+      // const link = document.createElement('a');
+      // link.href = downloadURL;
+      // // link.download = 
+      // document.body.appendChild(link);
+      // link.click();
+      // link.remove();
       
       // установить шаг
-      let step = 4;
-      axios.put("http://localhost:3001/students/setStep/"+idStudent, {step})
-      .then(navigate('/student/'))
-      .catch(err => console.log(err));
+      // let step = 4;
+      // axios.put("http://localhost:3001/students/setStep/"+idStudent, {step})
+      // .then(navigate('/student/'))
+      // .catch(err => console.log(err));
     }
 
     return (

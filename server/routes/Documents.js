@@ -63,6 +63,17 @@ router.post("/", (req,res) =>{
 //     });
 // });
 
+router.get("/downloadcontract/:idStudent", (req, res) => {
+    const sql = `SELECT contract_path FROM documents WHERE idStudent = ?`;
+    db.all(sql, [req.params.idStudent], (err, result)=>{
+        if(err) throw err;
+        let path = '~/public/documents/';
+        // res.download(path, result[0].contract_path);
+        res.sendFile(path, result[0].contract_path);
+        // res.send(result);
+    });
+});
+
 router.put("/resumepath/:id", upload.single("file"), (req,res) =>{
     if (!req.file) 
     {
