@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from "axios"
 import { useNavigate } from 'react-router-dom';
+import Doc from './uwu.jpg'
 
 
 
@@ -29,12 +30,34 @@ export const TeachersRequests = ( ) => {
     .catch(err => console.log(err))
   }
 
+  async function getPhoto(e) {
+    await axios.get("http://localhost:3001/downloads", {responseType: 'blob'})
+    .then(res => {
+      const blob = res.data
+      const downloadURL = window.URL.createObjectURL(new Blob([blob]));
+          const link = document.createElement('a');
+          link.href = downloadURL;
+          link.download = 'cute picture.jpg'
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+    })
+    .catch(err => console.log(err))
+  }
+
   const navigate = useNavigate();
   // debugger;
   return (
     <div>
       {/* <div> */}
       {/* </div> */}
+      {/* <a href={Doc}
+        download='cute picture'
+        target='_blank'
+        rel="noreferrer">
+          <button>Dongeload</button>
+      </a> */}
+      <button onClick={getPhoto}>Dongeload</button>
       <div>
       {/* <img src="https://i.pinimg.com/736x/49/c4/99/49c499390ea5b29bd9afddce1bf58a2b.jpg"/> */}
         <table border="2px" border-collapse="collapse">

@@ -27,6 +27,8 @@ const studentcompanyRouter = require('./routes/StudentsCompanies');
 app.use('/studentscompanies', studentcompanyRouter);
 const companycourseRouter = require('./routes/CompaniesCourses');
 app.use('/companiescourses', companycourseRouter);
+const downloadsRouter = require('./routes/Downloads');
+app.use('/downloads', downloadsRouter);
 
 app.listen(3001 , () => console.log("Listening at port 3001"));
 
