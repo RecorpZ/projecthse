@@ -3,6 +3,7 @@ const router = express.Router()
 const db = require('../db-config')
 const multer = require('multer')
 const path = require('path')
+const fs = require('fs')
 
 
 var storage = multer.diskStorage({
@@ -67,10 +68,12 @@ router.get("/downloadcontract/:idStudent", (req, res) => {
     const sql = `SELECT contract_path FROM documents WHERE idStudent = ?`;
     db.all(sql, [req.params.idStudent], (err, result)=>{
         if(err) throw err;
-        let path = '~/public/documents/';
-        // res.download(path, result[0].contract_path);
-        res.sendFile(path, result[0].contract_path);
-        // res.send(result);
+        // console.log(result);
+        let file_path = 'public/documents/'+result[0].contract_path;
+        fs.readFile(file_path, function(err, data) {
+            if (err) throw err; // Fail if the file can't be read.
+            res.send(data); // Send the file data to the browser.
+      });
     });
 });
 
