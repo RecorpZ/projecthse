@@ -18,7 +18,7 @@ export const StudentAccepted = ( ) => {
 
         // get company with accepted status and highest priority
         axios.post("http://localhost:3001/companies/getAcceptedCompanyByIdStudent",{idStudent})
-        .then(res => { setCompany(res.data[0])});
+        .then(res => { setCompany(res.data)});
       }, [idStudent]);
 
     return (

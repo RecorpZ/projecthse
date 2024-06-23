@@ -22,10 +22,11 @@ router.get("/:id", (req,res) =>{
 router.post("/getAcceptedCompanyByIdStudent", (req,res) =>{
     const sql = `SELECT name FROM StudentsCompanies
         JOIN Companies ON Companies.id = StudentsCompanies.idCompany
-        WHERE idStudent = ? AND status = 3`;
+        WHERE idStudent = ? AND status = 3
+        ORDER BY priority ASC`;
     db.all(sql, [req.body.idStudent], (err, result)=>{
         if(err) throw err;
-        res.send(result);
+        res.send(result[0]);
     });
 });
 

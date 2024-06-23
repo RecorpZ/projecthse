@@ -17,22 +17,24 @@ export const StudentApplicationsStatus = ( ) => {
           if (step != 8) navigate('/student/');
         });
 
-      // TODO get companies with priority 1-3
+      // получить список компаний со статусами
       axios.post("http://localhost:3001/companies/getCompaniesStatusesByIdStudent",{idStudent})
       .then(result => { 
-        setCompanies(result.data); 
-        companies = result.data;
-        console.log(companies); 
+        setCompanies(result.data);
+        console.log(companies);
         // установить шаг
         let step;
         console.log(companies);
         if (companies[0].status == 2 && (companies.length < 2 || companies[1].status == 2) && (companies.length < 3 || companies[2].status == 2))
           step = 7;
-        else if ((companies[0].status != 0 && companies[0].status != 1 && (companies.length < 2 || companies[1].status != 0 && companies[1].status != 1) && (companies.length < 3 || companies[2].status != 0 && companies[2].status != 1)))
-          step = 9
+        // else if ((companies[0].status != 0 && companies[0].status != 1 && (companies.length < 2 || companies[1].status != 0 && companies[1].status != 1) && (companies.length < 3 || companies[2].status != 0 && companies[2].status != 1)))
+        else if (companies[0].status == 3 || 
+          (companies[0].status == 2 && companies[1].status == 3) ||
+          (companies[0].status == 2 && companies[1].status == 2 && companies[2].status == 3))
+          step = 9;
         else return;
         axios.put("http://localhost:3001/students/setStep/"+idStudent, {step})
-        .then(navigate('/student/'))
+        .then(res => navigate('/student/'))
         .catch(err => console.log(err));
       })
       .catch(err => {console.log(err); return;});

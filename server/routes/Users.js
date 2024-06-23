@@ -110,7 +110,7 @@ router.post("/register", (req,res) =>{
             return;
         }
     });
-    if (role === "Teacher")
+    if (role === "teacher")
     {
         db.all(`INSERT INTO Teachers (first_name, second_name, last_name, login, password_hash) VALUES (?, ?, ?, ?, ?); `, [first_name, second_name, last_name, login, hashedPassword], (err, result)=>
         {               
