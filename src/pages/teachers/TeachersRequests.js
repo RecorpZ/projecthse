@@ -113,7 +113,7 @@ export const TeachersRequests = ( ) => {
                     }
                   })); updateStudentsCompanies(sc.idStudent, sc.Company3, 3, Number(e.target.value))}}>
                   <option value={0}>Рассмотрение</option>
-                  <option value={1} style={{background: "#ff1050"}}>Собеседование</option>
+                  <option value={1}>Собеседование</option>
                   <option value={2}>Отказ</option>
                   <option value={3}>Принят</option>
                   </select></div> : ""}</td>
