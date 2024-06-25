@@ -34,7 +34,7 @@ export const TeachersStudent = ( ) => {
     .then(res => {console.log(res)})
     .catch(err => console.log(err))
   }
-  function downloadresume() {
+  function downloadresume(idStudent) {
         axios.get("http://localhost:3001/documents/downloadcontract/"+idStudent, {responseType: 'blob'})
       .then(res => {
         const blob = res.data;
@@ -50,7 +50,7 @@ export const TeachersStudent = ( ) => {
       .catch(e => console.error('Ошибка при скачивании файла:', e));
   }
 
-  function downloadfactorycard() {
+  function downloadfactorycard(idStudent) {
     axios.get("http://localhost:3001/documents/downloadcontract/"+idStudent, {responseType: 'blob'})
   .then(res => {
     const blob = res.data;
@@ -66,7 +66,8 @@ export const TeachersStudent = ( ) => {
   .catch(e => console.error('Ошибка при скачивании файла:', e));
 }
 
-function downloadcontract() {
+function downloadcontract(parma) {
+ const idStudent = parma
   axios.get("http://localhost:3001/documents/downloadcontract/"+idStudent, {responseType: 'blob'})
 .then(res => {
   const blob = res.data;
@@ -82,7 +83,7 @@ function downloadcontract() {
 .catch(e => console.error('Ошибка при скачивании файла:', e));
 }
 
-function downloadsigncontract() {
+function downloadsigncontract(idStudent) {
   axios.get("http://localhost:3001/documents/downloadcontract/"+idStudent, {responseType: 'blob'})
 .then(res => {
   const blob = res.data;
@@ -96,6 +97,9 @@ function downloadsigncontract() {
   link.remove();
 })
 .catch(e => console.error('Ошибка при скачивании файла:', e));
+}
+function a (){
+  console.log("dfdf")
 }
 
   const navigate = useNavigate();
@@ -118,10 +122,13 @@ function downloadsigncontract() {
           return (
             <tr key={document.id}>
               <td>{student ? student.first_name : '-'} {student ? student.second_name : '-'}</td>
-              <td><a href=  {document.resume_path} onClick={downloadresume}target="_blank">Резюме</a></td>
-              <td><a href= {document.factory_card_path} onClick={downloadfactorycard} >Карточка завода</a></td>
-              <td><a href={document.contract_path} onClick={downloadcontract} target="_blank">Контракт</a></td>
-              <td><a href={document.signed_contract_path}onClick={downloadsigncontract}  target="_blank">Подписанный контракт</a></td>
+              <td><a href=  {document.resume_path}         target="_blank">Резюме</a></td>
+              <td><a href= {document.factory_card_path}    target="_blank" >Карточка завода</a></td>
+              <td>
+              <a href={document.contract_path}         target="_blank">Контракт</a>
+              <button onClick={ () => downloadcontract(student.id) }>Скачать</button>
+              </td>
+              <td><a href={document.signed_contract_path}  target="_blank">Подписанный контракт</a></td>
             </tr>
           );
         })}
