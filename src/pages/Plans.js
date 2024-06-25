@@ -20,13 +20,13 @@ const [module4, setM4] = useState([]);
 
 useEffect(() => {
   async function fetchData() {
-    const responseMat = await axios.get('http://localhost:3001/matlist');
+    const responseMat = await axios.get('https://hat-servers-insafyus.amvera.io/matlist');
     setMaterlist(responseMat.data);
-    const responseReq = await axios.get('http://localhost:3001/reqlist');
+    const responseReq = await axios.get('https://hat-servers-insafyus.amvera.io/reqlist');
     setReqlist(responseReq.data);
-    const planname = await axios.get('http://localhost:3001/plannamelist');
+    const planname = await axios.get('https://hat-servers-insafyus.amvera.io/plannamelist');
     setPlanName(planname.data);
-    const planlist = await axios.get('http://localhost:3001/planelist');
+    const planlist = await axios.get('https://hat-servers-insafyus.amvera.io/planelist');
     setPlansm(planlist.data);
     setLoading(false);
   }

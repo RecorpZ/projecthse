@@ -11,27 +11,27 @@ export const TeachersRequests = ( ) => {
   const [studentsCompanies, setStudentsCompanies] = useState([]);
   useEffect(()=>{
       console.log("new line")
-      // axios.get("http://localhost:3001/Students/")
+      // axios.get("https://hat-servers-insafyus.amvera.io/Students/")
       // .then(res => {setStudents(res.data); console.log(res.data)})
       // .catch(err => console.log(err))
       
-      // axios.get("http://localhost:3001/Courses/")
+      // axios.get("https://hat-servers-insafyus.amvera.io/Courses/")
       // .then(res => {setCourses(res.data); console.log(res.data)})
       // .catch(err => console.log(err))
 
-      axios.get("http://localhost:3001/StudentsCompanies/normal")
+      axios.get("https://hat-servers-insafyus.amvera.io/StudentsCompanies/normal")
       .then(res => {setStudentsCompanies(res.data); console.log(res.data)})
       .catch(err => console.log(err))
   },[]);
 
   async function updateStudentsCompanies(_idStudent, _company, _priority, _status) {
-    await axios.put(`http://localhost:3001/StudentsCompanies/${_idStudent}/${_company}`, {idStudent: _idStudent, idCompany: _company, priority: _priority, status: _status})
+    await axios.put(`https://hat-servers-insafyus.amvera.io/StudentsCompanies/${_idStudent}/${_company}`, {idStudent: _idStudent, idCompany: _company, priority: _priority, status: _status})
     .then(res => {console.log(res)})
     .catch(err => console.log(err))
   }
 
   async function getPhoto(e) {
-    await axios.get("http://localhost:3001/downloads", {responseType: 'blob'})
+    await axios.get("https://hat-servers-insafyus.amvera.io/downloads", {responseType: 'blob'})
     .then(res => {
       const blob = res.data
       const downloadURL = window.URL.createObjectURL(new Blob([blob]));

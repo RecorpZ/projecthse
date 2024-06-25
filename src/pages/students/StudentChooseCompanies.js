@@ -9,14 +9,14 @@ export const StudentChooseCompanies = ( ) => {
 
     useEffect(() => {
       // проверка шага
-      axios.get("http://localhost:3001/students/getStep/"+idStudent)
+      axios.get("https://hat-servers-insafyus.amvera.io/students/getStep/"+idStudent)
       .then(res => {
           let step = res.data.step;
           if (step != 7) navigate('/student/');
         });
 
       // получить список компаний
-      axios.post("http://localhost:3001/companies/getCompaniesByIdStudent",{idStudent})
+      axios.post("https://hat-servers-insafyus.amvera.io/companies/getCompaniesByIdStudent",{idStudent})
       .then(result => { setCompanies(result.data)})
       .catch(err => console.log(err));
       }, [idStudent]);
@@ -35,11 +35,11 @@ export const StudentChooseCompanies = ( ) => {
         let company = companies.filter((item) => item.priority == i)[0]
         let idCompany = company.id
         let priority = company.priority
-        axios.post("http://localhost:3001/studentscompanies", {idStudent, idCompany, priority})
+        axios.post("https://hat-servers-insafyus.amvera.io/studentscompanies", {idStudent, idCompany, priority})
         .then(res => {
           // установить шаг
           let step = 8;
-          axios.put("http://localhost:3001/students/setStep/"+idStudent, {step})
+          axios.put("https://hat-servers-insafyus.amvera.io/students/setStep/"+idStudent, {step})
           .then(res => navigate('/student/'))
           .catch(err => console.log(err));
         })

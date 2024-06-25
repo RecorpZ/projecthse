@@ -12,7 +12,7 @@ export const StudentAttachCard = ( ) => {
     
     useEffect(() => {
       // проверка шага
-      axios.get("http://localhost:3001/students/getStep/"+idStudent)
+      axios.get("https://hat-servers-insafyus.amvera.io/students/getStep/"+idStudent)
       .then(res => {
           let step = res.data.step;
           if (step != 1) navigate('/student/');
@@ -26,7 +26,7 @@ export const StudentAttachCard = ( ) => {
       const formData = new FormData();
       formData.append("file", file);
       formData.append("fileName", fileName);
-      axios.put("http://localhost:3001/documents/factorycardpath/"+idStudent, formData)
+      axios.put("https://hat-servers-insafyus.amvera.io/documents/factorycardpath/"+idStudent, formData)
       .then(res => {
         if (res.data == "NoFile"){
           alert("Файл не прикреплен");
@@ -34,7 +34,7 @@ export const StudentAttachCard = ( ) => {
         else{
           // установить шаг
           let step = 2;
-          axios.put("http://localhost:3001/students/setStep/"+idStudent, {step})
+          axios.put("https://hat-servers-insafyus.amvera.io/students/setStep/"+idStudent, {step})
           .then(navigate('/student/'))
           .catch(err => console.log(err));
         }

@@ -9,7 +9,7 @@ export const StudentWaitResponse = ( ) => {
 
     useEffect(() => {
       // проверка шага
-      axios.get("http://localhost:3001/students/getStep/"+idStudent)
+      axios.get("https://hat-servers-insafyus.amvera.io/students/getStep/"+idStudent)
       .then(res => {
           let step = res.data.step;
           if (step != 2) navigate('/student/');
@@ -17,13 +17,13 @@ export const StudentWaitResponse = ( ) => {
 
       // получить информацию есть ли файл
       let contractexists;
-      axios.get("http://localhost:3001/documents/contractexists/"+idStudent)
+      axios.get("https://hat-servers-insafyus.amvera.io/documents/contractexists/"+idStudent)
       .then(res => {
         contractexists = res.data
         if (contractexists) {
           // установить шаг
           let step = 3;
-          axios.put("http://localhost:3001/students/setStep/"+idStudent, {step})
+          axios.put("https://hat-servers-insafyus.amvera.io/students/setStep/"+idStudent, {step})
           .then(navigate('/student/'))
           .catch(err => console.log(err));
         }})

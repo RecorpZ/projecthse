@@ -9,7 +9,7 @@ export const Test = ( ) => {
     const [require, setrequire] = useState([]);
     const [materlist, setMaterlist] = useState([]);
     useEffect(() => {
-      axios.post("http://localhost:3001/materiallist")
+      axios.post("https://hat-servers-insafyus.amvera.io/materiallist")
         .then((res) => {
           const a = res.data;
           a.forEach((entry) => {
@@ -29,7 +29,7 @@ export const Test = ( ) => {
     const cursdur = e.target.duration.value;
     const curstime = e.target.time.value;
 
-    axios.post("http://localhost:3001/crmat",{cursname, curscost,cursdur,curstime})
+    axios.post("https://hat-servers-insafyus.amvera.io/crmat",{cursname, curscost,cursdur,curstime})
     .then(res =>{
       if(res.data === "already"){
         console.log("Имя занято")
@@ -38,7 +38,7 @@ export const Test = ( ) => {
       if(res.data === "sled")
       {
         require.forEach((reqe) => {
-          axios.post("http://localhost:3001/crreq",{cursname,reqe})
+          axios.post("https://hat-servers-insafyus.amvera.io/crreq",{cursname,reqe})
         });
         window.location.reload();
       }

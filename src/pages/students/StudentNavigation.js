@@ -8,7 +8,7 @@ export const StudentNavigation = () => {
 
     const navigate = useNavigate();
     useEffect(() => {
-        axios.get("http://localhost:3001/students/getStep/"+idStudent)
+        axios.get("https://hat-servers-insafyus.amvera.io/students/getStep/"+idStudent)
         .then(res => {
             let step = res.data.step;
             console.log(step);

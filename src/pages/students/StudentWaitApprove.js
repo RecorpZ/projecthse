@@ -16,7 +16,7 @@ export const StudentWaitApprove = ( ) => {
 
     useEffect(() => {
       // проверка шага
-      axios.get("http://localhost:3001/students/getStep/"+idStudent)
+      axios.get("https://hat-servers-insafyus.amvera.io/students/getStep/"+idStudent)
       .then(res => {
           let step = res.data.step;
           if (step != 5) navigate('/student/');
@@ -27,12 +27,12 @@ export const StudentWaitApprove = ( ) => {
       e.preventDefault();
 
       // получить информацию есть ли файл
-      axios.get("http://localhost:3001/documents/contractexists/"+idStudent)
+      axios.get("https://hat-servers-insafyus.amvera.io/documents/contractexists/"+idStudent)
       .catch(err => {console.log(err); return;});
       
       // установить шаг
       let step = 9;
-      axios.put("http://localhost:3001/students/setStep/"+idStudent, {step})
+      axios.put("https://hat-servers-insafyus.amvera.io/students/setStep/"+idStudent, {step})
       .then(navigate('/student/'))
       .catch(err => console.log(err));
     }
