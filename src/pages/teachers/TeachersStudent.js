@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import axios from "axios"
 import { useNavigate } from 'react-router-dom';
-
+import Button from 'react-bootstrap/Button';
+import Table from 'react-bootstrap/Table';
 
 
 export const TeachersStudent = ( ) => { 
@@ -35,7 +36,7 @@ export const TeachersStudent = ( ) => {
     .catch(err => console.log(err))
   }
   function downloadresume(idStudent) {
-        axios.get("http://localhost:3001/documents/downloadcontract/"+idStudent, {responseType: 'blob'})
+        axios.get("http://localhost:3001/documents/downloadresume/"+idStudent, {responseType: 'blob'})
       .then(res => {
         const blob = res.data;
         // console.log(res.data);
@@ -51,7 +52,7 @@ export const TeachersStudent = ( ) => {
   }
 
   function downloadfactorycard(idStudent) {
-    axios.get("http://localhost:3001/documents/downloadcontract/"+idStudent, {responseType: 'blob'})
+    axios.get("http://localhost:3001/documents/downloadfactorycard/"+idStudent, {responseType: 'blob'})
   .then(res => {
     const blob = res.data;
     // console.log(res.data);
@@ -84,7 +85,7 @@ function downloadcontract(parma) {
 }
 
 function downloadsigncontract(idStudent) {
-  axios.get("http://localhost:3001/documents/downloadcontract/"+idStudent, {responseType: 'blob'})
+  axios.get("http://localhost:3001/documents/downloadsigncontract/"+idStudent, {responseType: 'blob'})
 .then(res => {
   const blob = res.data;
   // console.log(res.data);
@@ -106,7 +107,7 @@ function a (){
   // debugger;
   return (
     <div>
-      <table border="2px" border-collapse="collapse">
+      <Table striped bordered hover border="2px" border-collapse="collapse">
       <thead>
         <tr>
           <th>Имя</th>
@@ -122,18 +123,39 @@ function a (){
           return (
             <tr key={document.id}>
               <td>{student ? student.first_name : '-'} {student ? student.second_name : '-'}</td>
-              <td><a href=  {document.resume_path}         target="_blank">Резюме</a></td>
-              <td><a href= {document.factory_card_path}    target="_blank" >Карточка завода</a></td>
               <td>
-              <a href={document.contract_path}         target="_blank">Контракт</a>
-              <button onClick={ () => downloadcontract(student.id) }>Скачать</button>
+                {document.resume_path != null ?(
+                <Button  variant="primary" onClick={ () => downloadresume(student.id) }>Скачать</Button>
+              ):(
+                <p>Отсутствует</p>
+              )}
+                </td>
+              <td>
+              {document.factory_card_path != null ?(
+                <Button variant="primary" onClick={ () => downloadfactorycard(student.id) }>Скачать</Button>
+              ):(
+                <p>Отсутствует</p>
+              )}
+                </td>
+              <td>
+              {document.contract_path != null ?(
+                 <Button variant="primary" onClick={ () => downloadcontract(student.id) }>Скачать</Button>
+              ):(
+                <p>Отсутствует</p>
+              )}
               </td>
-              <td><a href={document.signed_contract_path}  target="_blank">Подписанный контракт</a></td>
+              <td>
+              {document.signed_contract_path != null ?(
+                 <Button variant="primary" onClick={ () => downloadsigncontract(student.id) }>Скачать</Button>
+              ):(
+                <p>Отсутствует</p>
+              )}
+                </td>
             </tr>
           );
         })}
       </tbody>
-    </table>
+    </Table>
     </div>
   )
   
