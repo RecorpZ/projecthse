@@ -65,10 +65,11 @@ router.post("/", (req,res) =>{
 // });
 
 router.get("/downloadcontract/:idStudent", (req, res) => {
+    //console.log(req.params.idStudent);
     const sql = `SELECT contract_path FROM documents WHERE idStudent = ?`;
     db.all(sql, [req.params.idStudent], (err, result)=>{
         if(err) throw err;
-        // console.log(result);
+        console.log(result)
         let file_path = 'public/documents/'+result[0].contract_path;
         fs.readFile(file_path, function(err, data) {
             if (err) throw err; // Fail if the file can't be read.
@@ -76,6 +77,49 @@ router.get("/downloadcontract/:idStudent", (req, res) => {
       });
     });
 });
+
+router.get("/downloadresume/:idStudent", (req, res) => {
+    //console.log(req.params.idStudent);
+    const sql = `SELECT resume_path FROM documents WHERE idStudent = ?`;
+    db.all(sql, [req.params.idStudent], (err, result)=>{
+        if(err) throw err;
+        //console.log(result)
+        let file_path = 'public/documents/'+result[0].resume_path;
+        fs.readFile(file_path, function(err, data) {
+            if (err) throw err; // Fail if the file can't be read.
+            res.send(data); // Send the file data to the browser.
+      });
+    });
+});
+
+router.get("/downloadfactorycard/:idStudent", (req, res) => {
+    //console.log(req.params.idStudent);
+    const sql = `SELECT factory_card_path FROM documents WHERE idStudent = ?`;
+    db.all(sql, [req.params.idStudent], (err, result)=>{
+        if(err) throw err;
+        //console.log(result)
+        let file_path = 'public/documents/'+result[0].factory_card_path;
+        fs.readFile(file_path, function(err, data) {
+            if (err) throw err; // Fail if the file can't be read.
+            res.send(data); // Send the file data to the browser.
+      });
+    });
+});
+
+router.get("/downloadsigncontract/:idStudent", (req, res) => {
+    //console.log(req.params.idStudent);
+    const sql = `SELECT signed_contract_path FROM documents WHERE idStudent = ?`;
+    db.all(sql, [req.params.idStudent], (err, result)=>{
+        if(err) throw err;
+        //console.log(result)
+        let file_path = 'public/documents/'+result[0].signed_contract_path;
+        fs.readFile(file_path, function(err, data) {
+            if (err) throw err; // Fail if the file can't be read.
+            res.send(data); // Send the file data to the browser.
+      });
+    });
+});
+
 
 router.put("/resumepath/:id", upload.single("file"), (req,res) =>{
     if (!req.file) 
