@@ -25,10 +25,12 @@ import {StudentWaitResponse} from '../pages/students/StudentWaitResponse'
 import { TeachersCompanies } from "../pages/teachers/TeachersCompanies"
 import { TeachersCompaniesUpdate } from "../pages/teachers/EditTeachersCompanies"
 import { TeachersRequests } from '../pages/teachers/TeachersRequests'
+import { TeachersStudent } from "../pages/teachers/TeachersStudent"
 
 export const Header = ( ) => {
   
 const username = localStorage.getItem('UserName');
+const role = localStorage.getItem('Role');
 const usernickname = localStorage.getItem('UserNickname');
 const token = localStorage.getItem('Token');
     return (
@@ -46,17 +48,12 @@ const token = localStorage.getItem('Token');
             </Navbar.Brand>
             <Navbar.Toggle aria-controls='responsive-navbar-nav'/>
             <Navbar.Collapse id ='responsive-navbar-nav'>
-
                 <Nav className="ml-auto">
                     {/* <Nav.Link href="/">Основная страница</Nav.Link> */}
-                    {token === "Pass" 
+                    {token=== "Pass" 
                     ? (
                       <>
-                        {/* <Nav.Link href="/creplan">Создать план</Nav.Link>
-                        <Nav.Link href="/plans">Планы</Nav.Link>
-                        <Nav.Link href="/studmaterials">Учебные дисциплины</Nav.Link>
-                        <Nav.Link href="/cremat">Создать предмет</Nav.Link>
-                        <Nav.Link href="/misc">Прочее</Nav.Link> */}
+                       
                       </>
                     ) 
                   : (
@@ -66,6 +63,13 @@ const token = localStorage.getItem('Token');
                       </>
                     )
                   }
+                  {role === "teacher" && (
+                    <>
+                    <Nav.Link href="/teacherscomp">Компании</Nav.Link>
+                    <Nav.Link href="/teachersrequests">Заявки</Nav.Link>
+                    <Nav.Link href="/teachersstudents">Студенты</Nav.Link>
+                    </>
+                  )}
                     
                 </Nav>       
                 
@@ -104,6 +108,7 @@ const token = localStorage.getItem('Token');
                 <Route path="/teacherscomp" element={<TeachersCompanies/>} />
                 <Route path="/teacherscompUpdate/:idCompany/:idCourse" element={<TeachersCompaniesUpdate/>} />
                 <Route path="/teachersrequests" element={<TeachersRequests/>} />
+                <Route path="/teachersstudents" element={<TeachersStudent/>} />
               </Route>
               <Route element={<PrivateAcc/>}>
               <Route path="/reg" element={<Regist/>} />
