@@ -40,15 +40,15 @@ const token = localStorage.getItem('Token');
             <Navbar.Brand href='/'>
                 <img
                     src={logo}
-                    height={30}
-                    width={30}
+                    height={40}
+                    width={40}
                     className='d-inline-block align-top'
                     alt='Logo'
                 />
             </Navbar.Brand>
             <Navbar.Toggle aria-controls='responsive-navbar-nav'/>
             <Navbar.Collapse id ='responsive-navbar-nav'>
-                <Nav className="ml-auto">
+                <Nav className="mx-auto">
                     {/* <Nav.Link href="/">Основная страница</Nav.Link> */}
                     {token=== "Pass" 
                     ? (
@@ -65,9 +65,9 @@ const token = localStorage.getItem('Token');
                   }
                   {role === "teacher" && (
                     <>
-                    <Nav.Link href="/teacherscomp">Компании</Nav.Link>
-                    <Nav.Link href="/teachersrequests">Заявки</Nav.Link>
-                    <Nav.Link href="/teachersstudents">Студенты</Nav.Link>
+                    <Nav.Link style={{ border: '5px solid #dee2e6', fontSize: '22px',fontWeight: 'bold',color: 'white'}} href="/teacherscomp">Компании</Nav.Link>
+                    <Nav.Link style={{ border: '5px solid #dee2e6', fontSize: '22px',fontWeight: 'bold',color: 'white'}} href="/teachersrequests">Заявки</Nav.Link>
+                    <Nav.Link style={{ border: '5px solid #dee2e6', fontSize: '22px',fontWeight: 'bold',color: 'white'}} href="/teachersstudents">Студенты</Nav.Link>
                     </>
                   )}
                     
