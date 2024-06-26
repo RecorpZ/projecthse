@@ -16,11 +16,11 @@ export const CreatePlans = ( ) => {
 
     useEffect(() => {
         async function fetchData() {
-          const responseMat = await axios.get('http://localhost:3001/matlist');
+          const responseMat = await axios.get('https://hat-servers-insafyus.amvera.io/matlist');
           setMaterlist(responseMat.data);
-          const responseReq = await axios.get('http://localhost:3001/reqlist');
+          const responseReq = await axios.get('https://hat-servers-insafyus.amvera.io/reqlist');
           setReqlist(responseReq.data);
-          const planname = await axios.get('http://localhost:3001/plannamelist');
+          const planname = await axios.get('https://hat-servers-insafyus.amvera.io/plannamelist');
           setPlanName(planname.data);
           setLoading(false);
         }
@@ -309,7 +309,7 @@ export const CreatePlans = ( ) => {
 
           // Объединяем массивы modifiedMas1, modifiedMas2, modifiedMas3 и modifiedMas4
           const combined = modifiedMas1.concat(modifiedMas2, modifiedMas3, modifiedMas4);
-          axios.post("http://localhost:3001/addplans",{combined,tplanname})
+          axios.post("https://hat-servers-insafyus.amvera.io/addplans",{combined,tplanname})
           setTimeout(() => {
             window.location.reload();
             }, 500);

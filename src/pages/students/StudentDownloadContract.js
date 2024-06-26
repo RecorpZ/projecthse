@@ -17,7 +17,7 @@ export const StudentDownloadContract = ( ) => {
     
     useEffect(() => {
       // проверка шага
-      axios.get("http://localhost:3001/students/getStep/"+idStudent)
+      axios.get("https://hat-servers-insafyus.amvera.io/students/getStep/"+idStudent)
       .then(res => {
           let step = res.data.step;
           if (step != 3) navigate('/student/');
@@ -28,7 +28,7 @@ export const StudentDownloadContract = ( ) => {
       e.preventDefault();
       e.stopPropagation();
 
-      axios.get("http://localhost:3001/documents/downloadcontract/"+idStudent, {responseType: 'blob'})
+      axios.get("https://hat-servers-insafyus.amvera.io/documents/downloadcontract/"+idStudent, {responseType: 'blob'})
       .then(res => {
         const blob = res.data;
         // console.log(res.data);
@@ -42,7 +42,7 @@ export const StudentDownloadContract = ( ) => {
         
         // установить шаг
         let step = 4;
-        axios.put("http://localhost:3001/students/setStep/"+idStudent, {step})
+        axios.put("https://hat-servers-insafyus.amvera.io/students/setStep/"+idStudent, {step})
         .then(res => navigate('/student/'))
         .catch(err => console.log(err));
       })
@@ -62,7 +62,7 @@ export const StudentDownloadContract = ( ) => {
       .catch(err => console.log(err));
 
   // async function getPhoto(e) {
-  //   await axios.get("http://localhost:3001/downloads", {responseType: 'blob'})
+  //   await axios.get("https://hat-servers-insafyus.amvera.io/downloads", {responseType: 'blob'})
   //   .then(res => {
   //     const blob = res.data
   //     const downloadURL = window.URL.createObjectURL(new Blob([blob]));
@@ -88,7 +88,7 @@ export const StudentDownloadContract = ( ) => {
       
       // установить шаг
       // let step = 4;
-      // axios.put("http://localhost:3001/students/setStep/"+idStudent, {step})
+      // axios.put("https://hat-servers-insafyus.amvera.io/students/setStep/"+idStudent, {step})
       // .then(navigate('/student/'))
       // .catch(err => console.log(err));
     }

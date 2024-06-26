@@ -13,11 +13,11 @@ export const TeachersCompanies = ( ) => {
   },[]);
 
   async function getCC() {
-    await axios.get("http://localhost:3001/CompaniesCourses/normal")
+    await axios.get("https://hat-servers-insafyus.amvera.io/CompaniesCourses/normal")
     .then(res => {setCompaniesCourses(res.data); console.log(res.data)})
     .catch(err => console.log(err))
 
-    await axios.get("http://localhost:3001/Courses")
+    await axios.get("https://hat-servers-insafyus.amvera.io/Courses")
     .then(res => {setCourses(res.data); console.log(res.data)})
     .catch(err => console.log(err))
   }
@@ -26,16 +26,16 @@ export const TeachersCompanies = ( ) => {
 
   async function addBond(e) {
     let idNewCourse = 1;
-    // await axios.post("http://localhost:3001/Courses/", {name: "new"})
+    // await axios.post("https://hat-servers-insafyus.amvera.io/Courses/", {name: "new"})
     // .then(res => {idNewCourse = res.data[0]["last_insert_rowid()"]; console.log(res)})
     // .catch(err => console.log(err))
 
     let idNewCompany = -1;
-    await axios.post("http://localhost:3001/Companies/", {name: "new", contacts: "", places: 0})
+    await axios.post("https://hat-servers-insafyus.amvera.io/Companies/", {name: "new", contacts: "", places: 0})
     .then(res => {idNewCompany = res.data[0]["last_insert_rowid()"]; console.log(res)})
     .catch(err => console.log(err))
 
-    await axios.post("http://localhost:3001/CompaniesCourses/", {idCompany: idNewCompany, idCourse: idNewCourse})
+    await axios.post("https://hat-servers-insafyus.amvera.io/CompaniesCourses/", {idCompany: idNewCompany, idCourse: idNewCourse})
     .then(res => {idNewCompany = res.data[0]; console.log(res)})
     .catch(err => console.log(err))
     console.log(idNewCourse)
@@ -45,7 +45,7 @@ export const TeachersCompanies = ( ) => {
 
   async function deleteRow(e) {
     console.log(e);
-    await axios.delete(`http://localhost:3001/companiescourses/compcourse/${e.idCompany}/${e.idCourse}`)
+    await axios.delete(`https://hat-servers-insafyus.amvera.io/companiescourses/compcourse/${e.idCompany}/${e.idCourse}`)
     .then(res => {console.log(res.data)})
     .catch(err => console.log(err))
     await getCC();

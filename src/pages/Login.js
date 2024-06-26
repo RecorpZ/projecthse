@@ -10,13 +10,13 @@ const navigate = useNavigate();
     const login = e.target.ulogin.value;
     const password = e.target.upassword.value;
 
-    axios.post("http://localhost:3001/user/login",{login, password})
+    axios.post("https://hat-servers-insafyus.amvera.io/user/login",{login, password})
     .then(res =>{
       console.log(res.data)
       if(res.data === "AccountConfirmed"){
         console.log("Вход выполнен") 
 
-        axios.post("http://localhost:3001/user/getbylogin",{login})
+        axios.post("https://hat-servers-insafyus.amvera.io/user/getbylogin",{login})
           .then(res => {
             let user = res.data.user;
             let role = res.data.role;

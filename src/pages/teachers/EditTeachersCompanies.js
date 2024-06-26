@@ -16,11 +16,11 @@ export const TeachersCompaniesUpdate = () => {
     },[]);
 
     async function getCC() {
-      await axios.get(`http://localhost:3001/CompaniesCourses/normal/${idCompany}/${idCourse}`)
+      await axios.get(`https://hat-servers-insafyus.amvera.io/CompaniesCourses/normal/${idCompany}/${idCourse}`)
       .then(res => {setCompaniesCourses(res.data[0]); console.log(res.data[0])})
       .catch(err => console.log(err))
   
-      await axios.get("http://localhost:3001/Courses")
+      await axios.get("https://hat-servers-insafyus.amvera.io/Courses")
       .then(res => {setCourses(res.data); console.log(res.data)})
       .catch(err => console.log(err))
     }
@@ -30,11 +30,11 @@ export const TeachersCompaniesUpdate = () => {
     }
 
     async function handleSumbit(e) {
-        // await axios.put(`http://localhost:3001/Courses/${idCourse}`, {name: companiesCourses.name})
+        // await axios.put(`https://hat-servers-insafyus.amvera.io/Courses/${idCourse}`, {name: companiesCourses.name})
         // .then(res => {console.log(res)})
         // .catch(err => console.log(err))
         // debugger
-        await axios.put(`http://localhost:3001/Companies/${idCompany}`, {
+        await axios.put(`https://hat-servers-insafyus.amvera.io/Companies/${idCompany}`, {
             name: companiesCourses.CompName,
             contacts: companiesCourses.contact,
             places: companiesCourses.places

@@ -11,9 +11,9 @@ export const Studmaterials = () => {
 
   useEffect(() => {
     async function fetchData() {
-      const responseMat = await axios.get('http://localhost:3001/matlist');
+      const responseMat = await axios.get('https://hat-servers-insafyus.amvera.io/matlist');
       setMaterlist(responseMat.data);
-      const responseReq = await axios.get('http://localhost:3001/reqlist');
+      const responseReq = await axios.get('https://hat-servers-insafyus.amvera.io/reqlist');
       setReqlist(responseReq.data);
       setLoading(false);
     }
@@ -47,7 +47,7 @@ export const Studmaterials = () => {
     setReqlist(updatedReq);
   };
   async function deleteData(cursname) {
-    await axios.delete('http://localhost:3001/delete',{cursname});
+    await axios.delete('https://hat-servers-insafyus.amvera.io/delete',{cursname});
   }
 
   return (
@@ -62,7 +62,7 @@ export const Studmaterials = () => {
                 if (del === 1 + par.Id){
                   handleDelete(par.CursName)
                   var cursName = par.Id
-                  axios.post('http://localhost:3001/delete',{cursName});
+                  axios.post('https://hat-servers-insafyus.amvera.io/delete',{cursName});
                   setDel(0)
                 }
                 else{

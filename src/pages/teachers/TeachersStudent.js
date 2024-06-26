@@ -16,30 +16,30 @@ export const TeachersStudent = ( ) => {
   useEffect(()=>{
       console.log("new line")
 
-            axios.get("http://localhost:3001/Documents/")
+            axios.get("https://hat-servers-insafyus.amvera.io/Documents/")
             .then(res => {setdocuments(res.data); console.log(res.data)})
             .catch(err => console.log(err))
 
-       axios.get("http://localhost:3001/Students/")
+       axios.get("https://hat-servers-insafyus.amvera.io/Students/")
        .then(res => {setStudents(res.data); console.log(res.data)})
        .catch(err => console.log(err))
       
-      // axios.get("http://localhost:3001/Courses/")
+      // axios.get("https://hat-servers-insafyus.amvera.io/Courses/")
       // .then(res => {setCourses(res.data); console.log(res.data)})
       // .catch(err => console.log(err))
 
-      // axios.get("http://localhost:3001/StudentsCompanies/normal")
+      // axios.get("https://hat-servers-insafyus.amvera.io/StudentsCompanies/normal")
       // .then(res => {setStudentsCompanies(res.data); console.log(res.data)})
       // .catch(err => console.log(err))
   },[]);
 
   async function updateStudentsCompanies(_idStudent, _company, _priority, _status) {
-    await axios.put(`http://localhost:3001/StudentsCompanies/${_idStudent}/${_company}`, {idStudent: _idStudent, idCompany: _company, priority: _priority, status: _status})
+    await axios.put(`https://hat-servers-insafyus.amvera.io/StudentsCompanies/${_idStudent}/${_company}`, {idStudent: _idStudent, idCompany: _company, priority: _priority, status: _status})
     .then(res => {console.log(res)})
     .catch(err => console.log(err))
   }
   function downloadresume(idStudent) {
-        axios.get("http://localhost:3001/documents/downloadresume/"+idStudent, {responseType: 'blob'})
+        axios.get("https://hat-servers-insafyus.amvera.io/documents/downloadresume/"+idStudent, {responseType: 'blob'})
       .then(res => {
         const blob = res.data;
         // console.log(res.data);
@@ -55,7 +55,7 @@ export const TeachersStudent = ( ) => {
   }
 
   function downloadfactorycard(idStudent) {
-    axios.get("http://localhost:3001/documents/downloadfactorycard/"+idStudent, {responseType: 'blob'})
+    axios.get("https://hat-servers-insafyus.amvera.io/documents/downloadfactorycard/"+idStudent, {responseType: 'blob'})
   .then(res => {
     const blob = res.data;
     // console.log(res.data);
@@ -72,7 +72,7 @@ export const TeachersStudent = ( ) => {
 
 function downloadcontract(parma) {
  const idStudent = parma
-  axios.get("http://localhost:3001/documents/downloadcontract/"+idStudent, {responseType: 'blob'})
+  axios.get("https://hat-servers-insafyus.amvera.io/documents/downloadcontract/"+idStudent, {responseType: 'blob'})
 .then(res => {
   const blob = res.data;
   // console.log(res.data);
@@ -88,7 +88,7 @@ function downloadcontract(parma) {
 }
 
 function downloadsigncontract(idStudent) {
-  axios.get("http://localhost:3001/documents/downloadsigncontract/"+idStudent, {responseType: 'blob'})
+  axios.get("https://hat-servers-insafyus.amvera.io/documents/downloadsigncontract/"+idStudent, {responseType: 'blob'})
 .then(res => {
   const blob = res.data;
   // console.log(res.data);
@@ -134,7 +134,7 @@ function uploadContract(idStudent) {
         <tr>
           <th>Имя</th>
           <th>Резюме</th>
-          <th>Карточка завода</th>
+          <th>Карточка предприятия</th>
           <th>Контракт</th>
           <th>Подписанный контракт</th>
         </tr>

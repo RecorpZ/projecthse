@@ -9,7 +9,7 @@ export const Creatematerials = ( ) => {
     const [require, setrequire] = useState([]);
     const [materlist, setMaterlist] = useState([]);
     useEffect(() => {
-      axios.post("http://localhost:3001/materiallist")
+      axios.post("https://hat-servers-insafyus.amvera.io/materiallist")
         .then((res) => {
           const a = res.data;
           a.forEach((entry) => {
@@ -29,7 +29,7 @@ export const Creatematerials = ( ) => {
     const cursdur = e.target.duration.value;
     const curstime = e.target.time.value;
 
-    axios.post("http://localhost:3001/crmat",{cursname, curscost,cursdur,curstime})
+    axios.post("https://hat-servers-insafyus.amvera.io/crmat",{cursname, curscost,cursdur,curstime})
     .then(res =>{
       if(res.data === "already"){
         console.log("Имя занято")
@@ -38,7 +38,7 @@ export const Creatematerials = ( ) => {
       if(res.data === "sled")
       { if(require.length > 0 ){
 
-        axios.post("http://localhost:3001/crusnameid",{cursname})
+        axios.post("https://hat-servers-insafyus.amvera.io/crusnameid",{cursname})
       .then(res =>{
         
         const vara = res.data
@@ -46,12 +46,12 @@ export const Creatematerials = ( ) => {
         console.log(cursid)
         require.forEach((reqe) => {
           const reqid = reqe
-          axios.post("http://localhost:3001/reqnameid",{reqid})
+          axios.post("https://hat-servers-insafyus.amvera.io/reqnameid",{reqid})
       .then(res =>{
         const varb = res.data
         const reqid2 = varb[0].Id
         console.log(reqid2)
-              axios.post("http://localhost:3001/crreq",{cursid,reqid2})
+              axios.post("https://hat-servers-insafyus.amvera.io/crreq",{cursid,reqid2})
       })
         });
       })}

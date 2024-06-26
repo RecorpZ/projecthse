@@ -3,7 +3,14 @@ const app = express()
 const cors = require("cors")
 // const axios = require("axios")
 
-app.use(cors());
+app.use(cors({
+    origin: '*', // Разрешить все домены
+    methods: '*', // Разрешить все методы
+    allowedHeaders: '*', // Разрешить все заголовки
+    credentials: true, // Разрешить отправку cookies
+    preflightContinue: false,
+    optionsSuccessStatus: 204
+  }));
 app.use((req,res, next)=> {
     res.setHeader("Access-Control-Allow-Origin", "*");
     next();

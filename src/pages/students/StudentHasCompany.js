@@ -11,7 +11,7 @@ export const StudentHasCompany = ( ) => {
 
     useEffect(() => {
       // проверка шага
-      axios.get("http://localhost:3001/students/getStep/"+idStudent)
+      axios.get("https://hat-servers-insafyus.amvera.io/students/getStep/"+idStudent)
       .then(res => {
           let step = res.data.step;
           if (step != 0) navigate('/student/');
@@ -21,12 +21,16 @@ export const StudentHasCompany = ( ) => {
     const onFinish = e => {
       e.preventDefault();
       // установить значение, есть ли компания
+<<<<<<< HEAD
       hasCompany == 1 ? setHasCompany(1) : setHasCompany(0);
       axios.put("http://localhost:3001/students/setOwnCompany/"+idStudent, {hasCompany})
+=======
+      axios.put("https://hat-servers-insafyus.amvera.io/students/setOwnCompany/"+idStudent, {hasCompany})
+>>>>>>> bf008c1a77e9cbc61eb5a0226e0f06a57e893827
       .then(res => {
         // установить шаг
         let step = hasCompany == 1 ? 1 : 6;
-        axios.put("http://localhost:3001/students/setStep/"+idStudent, {step})
+        axios.put("https://hat-servers-insafyus.amvera.io/students/setStep/"+idStudent, {step})
         .then(res => {navigate('/student/');})
         .catch(err => console.log(err));
       })

@@ -20,9 +20,9 @@ export const Redactmaterials = ( ) => {
       async function fetchData() {
         setStoredValue(parseInt(storedItem));
 
-        const responseMat = await axios.get('http://localhost:3001/matlist');
+        const responseMat = await axios.get('https://hat-servers-insafyus.amvera.io/matlist');
         setDatamaterlist(responseMat.data);
-        const responseReq = await axios.get('http://localhost:3001/reqlist');
+        const responseReq = await axios.get('https://hat-servers-insafyus.amvera.io/reqlist');
         setrequire(responseReq.data);
         let fan = require.filter((item) => item.CursId === 27)
         setrequire(fan)
@@ -31,7 +31,7 @@ export const Redactmaterials = ( ) => {
 
 
       fetchData()
-      axios.post("http://localhost:3001/materiallist")
+      axios.post("https://hat-servers-insafyus.amvera.io/materiallist")
         .then((res) => {
           const a = res.data;
           a.forEach((entry) => {
@@ -70,7 +70,7 @@ export const Redactmaterials = ( ) => {
  
         let changeid = storedValue
 
-    axios.post("http://localhost:3001/editmat",{changeid,cursname, curscost,cursdur,curstime,require})
+    axios.post("https://hat-servers-insafyus.amvera.io/editmat",{changeid,cursname, curscost,cursdur,curstime,require})
     .then(res =>{
       if(res.data === "good"){
         sessionStorage.clear();

@@ -10,14 +10,14 @@ export const StudentAccepted = ( ) => {
     
     useEffect(() => {
       // проверка шага
-      axios.get("http://localhost:3001/students/getStep/"+idStudent)
+      axios.get("https://hat-servers-insafyus.amvera.io/students/getStep/"+idStudent)
       .then(res => {
           let step = res.data.step;
           if (step != 9) navigate('/student/');
         });
 
         // get company with accepted status and highest priority
-        axios.post("http://localhost:3001/companies/getAcceptedCompanyByIdStudent",{idStudent})
+        axios.post("https://hat-servers-insafyus.amvera.io/companies/getAcceptedCompanyByIdStudent",{idStudent})
         .then(res => { setCompany(res.data)});
       }, [idStudent]);
 
