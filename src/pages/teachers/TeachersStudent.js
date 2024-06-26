@@ -10,6 +10,9 @@ export const TeachersStudent = ( ) => {
   // const [courses, setCourses] = useState([]);
   const [students, setStudents] = useState([]);
   const [documents, setdocuments] = useState([]);
+  const [file, setFile] = useState();
+  const [fileName, setFileName] = useState();
+
   useEffect(()=>{
       console.log("new line")
 
@@ -103,6 +106,25 @@ function a (){
   console.log("dfdf")
 }
 
+function uploadContract(idStudent) {
+  // установить путь к файлу
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("fileName", fileName);
+  axios.put("http://localhost:3001/documents/contractpath/"+idStudent, formData)
+  .then(res => {
+    if (res.data == "NoFile"){
+      alert("Файл не прикреплен");
+    };
+  })
+  .catch(err => {console.log(err); return;});
+};
+
+  const saveFile = (e, idStudent) => {
+    setFile(e.target.files[0]);
+    setFileName(e.target.files[0].name);
+  };
+
   const navigate = useNavigate();
   // debugger;
   return (
@@ -138,10 +160,16 @@ function a (){
               )}
                 </td>
               <td>
-              {document.contract_path != null ?(
-                 <Button variant="primary" onClick={ () => downloadcontract(student.id) }>Скачать</Button>
+              {document.contract_path == null ?(
+                //  <Button variant="primary" onClick={ () => downloadcontract(student.id) }>Скачать</Button>
+                <form onSubmit={ () => uploadContract(student.id) }>
+                    <div>
+                      <input type="file" name="file" onChange={ saveFile }/>
+                      <Button variant="primary" type="submit">Отправить</Button>
+                    </div>
+                </form>
               ):(
-                <p>Отсутствует</p>
+                <p>Прикреплён</p>
               )}
               </td>
               <td>

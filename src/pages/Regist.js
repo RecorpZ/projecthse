@@ -54,11 +54,11 @@ export const Regist = ( ) => {
           <label>Роль</label>
           <div>
             <input type="radio" id="teacher" name="urole" value="teacher" onChange={handleRole} />
-            <label for="teacher">Teacher</label>
+            <label for="teacher">Сотрудник УО</label>
           </div>
           <div>
             <input type="radio" id="student" name="urole" value="student" onChange={handleRole} />
-            <label for="student">Student</label>
+            <label for="student">Студент</label>
           </div>
         </div>
 

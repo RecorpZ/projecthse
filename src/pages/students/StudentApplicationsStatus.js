@@ -3,7 +3,7 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 
 export const StudentApplicationsStatus = ( ) => {
-    const [companies, setCompanies] = useState([]);
+    let [companies, setCompanies] = useState([]);
     
     const idStudent = localStorage.getItem('UserId');
 
@@ -21,6 +21,7 @@ export const StudentApplicationsStatus = ( ) => {
       axios.post("http://localhost:3001/companies/getCompaniesStatusesByIdStudent",{idStudent})
       .then(result => { 
         setCompanies(result.data);
+        companies = result.data;
         console.log(companies);
         // установить шаг
         let step;

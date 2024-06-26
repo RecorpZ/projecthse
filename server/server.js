@@ -30,7 +30,11 @@ app.use('/companiescourses', companycourseRouter);
 const downloadsRouter = require('./routes/Downloads');
 app.use('/downloads', downloadsRouter);
 
-app.listen(3001 , () => console.log("Listening at port 3001"));
+// const port = 42100;
+const port = 3001;
+const host = 'localhost';
+// const host = 'hahaton.1gb.ru';
+app.listen(port, host, () => console.log("Listening at port " + port + " hostname " + host));
 
 
 // app.post("/loginAcc", (req,res) =>{

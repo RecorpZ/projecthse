@@ -45,7 +45,8 @@ export const TeachersRequests = ( ) => {
     .catch(err => console.log(err))
   }
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
+  console.log(studentsCompanies);
   // debugger;
   return (
     <div>
@@ -83,7 +84,7 @@ export const TeachersRequests = ( ) => {
                     } else {
                       return sc1;
                     }
-                  })); console.log(studentsCompanies[index]); updateStudentsCompanies(studentsCompanies[index].idStudent, studentsCompanies[index].Company1, 1, Number(e.target.value))}}>
+                  })); console.log(studentsCompanies[index]); updateStudentsCompanies(sc.idStudent, sc.Company1, 1, Number(e.target.value))}}>
                     <option value={0}>Рассмотрение</option>
                     <option value={1}>Собеседование</option>
                     <option value={2}>Отказ</option>

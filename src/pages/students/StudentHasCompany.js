@@ -3,7 +3,7 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 
 export const StudentHasCompany = ( ) => {
-    const [hasCompany, setHasCompany] = useState([]);
+    const [hasCompany, setHasCompany] = useState(0);
 
     const idStudent = localStorage.getItem('UserId'); 
 
@@ -21,6 +21,7 @@ export const StudentHasCompany = ( ) => {
     const onFinish = e => {
       e.preventDefault();
       // установить значение, есть ли компания
+      hasCompany == 1 ? setHasCompany(1) : setHasCompany(0);
       axios.put("http://localhost:3001/students/setOwnCompany/"+idStudent, {hasCompany})
       .then(res => {
         // установить шаг

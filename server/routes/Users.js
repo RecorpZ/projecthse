@@ -96,43 +96,50 @@ router.post("/register", (req,res) =>{
             res.send("allmail")
             return;
         }
-    });
-    db.all(`SELECT * FROM Students WHERE login = '${login}'`, (err, rows)=>
-    { 
-        if(err)
-            {
-                throw err;
-            }
-        if (rows.length > 0)
-        {
-            console.log('exists')
-            res.send("allmail")
-            return;
+        else{
+            db.all(`SELECT * FROM Students WHERE login = '${login}'`, (err, rows)=>
+            { 
+                if(err)
+                    {
+                        throw err;
+                    }
+                if (rows.length > 0)
+                {
+                    console.log('exists')
+                    res.send("allmail")
+                    return;
+                }
+                else{
+                    if (role === "teacher")
+                    {
+                        db.all(`INSERT INTO Teachers (first_name, second_name, last_name, login, password_hash) VALUES (?, ?, ?, ?, ?); `, [first_name, second_name, last_name, login, hashedPassword], (err, result)=>
+                        {               
+                            if(err)
+                            {
+                                throw err;
+                            }
+                            console.log(result);
+                            res.send("Ok");
+                            return;
+                        });
+                    }
+                    else{
+                        db.all(`INSERT INTO Students (first_name, second_name, last_name, login, password_hash, idCourse, own_company, step) VALUES (?, ?, ?, ?, ?, ?, 0, 0); `, [first_name, second_name, last_name, login, hashedPassword, courseId], (err, result)=>
+                        {
+                            if(err)
+                            {
+                                throw err;
+                            }
+                            console.log(result);
+                            res.send("Ok");
+                            return;
+                        })
+                    }
+                }
+            });
         }
     });
-    if (role === "teacher")
-    {
-        db.all(`INSERT INTO Teachers (first_name, second_name, last_name, login, password_hash) VALUES (?, ?, ?, ?, ?); `, [first_name, second_name, last_name, login, hashedPassword], (err, result)=>
-        {               
-            if(err)
-            {
-                throw err;
-            }
-            console.log(result);
-            res.send("Ok");
-        });
-    }
-    else{
-        db.all(`INSERT INTO Students (first_name, second_name, last_name, login, password_hash, idCourse, own_company, step) VALUES (?, ?, ?, ?, ?, ?, 0, 0); `, [first_name, second_name, last_name, login, hashedPassword, courseId], (err, result)=>
-        {
-            if(err)
-            {
-                throw err;
-            }
-            console.log(result);
-            res.send("Ok");
-        })
-    }
+    
 });
 
 module.exports = router;

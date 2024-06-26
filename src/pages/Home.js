@@ -14,7 +14,7 @@ if (role == "student"){
 }
 if (role == "teacher"){
   setTimeout(() => {
-    navigate('/',{ replace: true });
+    navigate('/teacherscomp',{ replace: true });
     window.location.reload();
     }, 500);
 }
