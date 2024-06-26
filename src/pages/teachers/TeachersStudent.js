@@ -111,7 +111,7 @@ function uploadContract(idStudent) {
   const formData = new FormData();
   formData.append("file", file);
   formData.append("fileName", fileName);
-  axios.put("http://localhost:3001/documents/contractpath/"+idStudent, formData)
+  axios.put("https://hat-servers-insafyus.amvera.io/documents/contractpath/"+idStudent, formData)
   .then(res => {
     if (res.data == "NoFile"){
       alert("Файл не прикреплен");

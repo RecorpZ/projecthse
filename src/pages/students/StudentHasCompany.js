@@ -21,12 +21,8 @@ export const StudentHasCompany = ( ) => {
     const onFinish = e => {
       e.preventDefault();
       // установить значение, есть ли компания
-<<<<<<< HEAD
       hasCompany == 1 ? setHasCompany(1) : setHasCompany(0);
-      axios.put("http://localhost:3001/students/setOwnCompany/"+idStudent, {hasCompany})
-=======
       axios.put("https://hat-servers-insafyus.amvera.io/students/setOwnCompany/"+idStudent, {hasCompany})
->>>>>>> bf008c1a77e9cbc61eb5a0226e0f06a57e893827
       .then(res => {
         // установить шаг
         let step = hasCompany == 1 ? 1 : 6;

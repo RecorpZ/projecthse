@@ -39,9 +39,9 @@ app.use('/downloads', downloadsRouter);
 
 // const port = 42100;
 const port = 3001;
-const host = 'localhost';
+// const host = 'localhost';
 // const host = 'hahaton.1gb.ru';
-app.listen(port, host, () => console.log("Listening at port " + port + " hostname " + host));
+app.listen(port, () => console.log("Listening at port " + port));
 
 
 // app.post("/loginAcc", (req,res) =>{
